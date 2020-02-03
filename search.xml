@@ -6,7 +6,7 @@
     <content><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一个轻量、高逼格但功能强大的静态博客生成程序，本文简单介绍如何通过Hexo快速往GitHub Pages 发布一篇文章。</p>
 <a id="more"></a>
 
-<h3 id="创建一篇文章"><a href="#创建一篇文章" class="headerlink" title="创建一篇文章"></a>创建一篇文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h3 id="创建一篇文章"><a href="#创建一篇文章" class="headerlink" title="创建一篇文章"></a>创建一篇文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"一篇新文章"</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
 <h3 id="运行本地服务器-方便预览"><a href="#运行本地服务器-方便预览" class="headerlink" title="运行本地服务器(方便预览)"></a>运行本地服务器(方便预览)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
