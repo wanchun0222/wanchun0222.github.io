@@ -3,21 +3,29 @@
   <entry>
     <title>hexo 快速发布一篇文章</title>
     <url>/2020/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+    <content><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一个轻量、高逼格但功能强大的静态博客生成程序，本文简单介绍如何通过Hexo快速往GitHub Pages 发布一篇文章。</p>
 <a id="more"></a>
 
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h3 id="创建一篇文章"><a href="#创建一篇文章" class="headerlink" title="创建一篇文章"></a>创建一篇文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="运行本地服务器-方便预览"><a href="#运行本地服务器-方便预览" class="headerlink" title="运行本地服务器(方便预览)"></a>运行本地服务器(方便预览)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="生成静态文章"><a href="#生成静态文章" class="headerlink" title="生成静态文章"></a>生成静态文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="发布到远程服务器-GitHub-Pages"><a href="#发布到远程服务器-GitHub-Pages" class="headerlink" title="发布到远程服务器(GitHub Pages)"></a>发布到远程服务器(GitHub Pages)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h3 id="新建一篇草稿"><a href="#新建一篇草稿" class="headerlink" title="新建一篇草稿"></a>新建一篇草稿</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"这是一未完成的草稿"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建的草稿被存放到了_drafts 目录下，如果草稿写完了想要发布呢？</p>
+</blockquote>
+<h3 id="发布一篇草稿"><a href="#发布一篇草稿" class="headerlink" title="发布一篇草稿"></a>发布一篇草稿</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo publish _drafts <span class="string">"这是一未完成的草稿"</span></span><br></pre></td></tr></table></figure>
+
+
 ]]></content>
       <categories>
         <category>工具</category>
