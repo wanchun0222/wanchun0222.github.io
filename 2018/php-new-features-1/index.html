@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+   
+  <meta name="keywords" content="LNMP博客" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    PHP新特性(php5.3-php5.6) |  格物致知
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-php-new-features-1" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PHP新特性(php5.3-php5.6)
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/php-new-features-1/" class="article-date">
+  <time datetime="2018-05-14T07:16:12.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">9分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
+<p>从PHP5.3开始到PHP5.6版本,PHP每次版本更新不但做到了最大限度的向后兼容,同时还添加了许多新特性;<br>为我们开发现代WEB项目提供了极大的方便。我们可以在PHP官方文档的<a href="http://php.net/manual/zh/appendices.php" target="_blank" rel="noopener">附录</a>查阅相关更详细<br>内容。如果你想动手运行及演练各版本的示例代码,可以使用这个<a href="https://3v4l.org/" target="_blank" rel="noopener">网站</a>, 它可以向你展示PHP各版本下的运行结果。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>在php5.3中，终于引入了命名空间。通俗的理解,命名空间就是一种文件级封装、定义文件级作用域的方式。具体的作用就是解决用户自己编写的代码与项目内部同事之间、PHP内部、引入的第三方的类、函数、常量的命名冲突问题。 具体使用请见手册。</p>
+<h3 id="后期静态绑定"><a href="#后期静态绑定" class="headerlink" title="后期静态绑定"></a>后期静态绑定</h3><p>在PHP5.3中引入了后期静态绑定特性，用于在类的继承逻辑中引用静态调用的方法或属性；在此逻辑中静态调用方法或属性时，使用的不再是当前类，而是调用的类。请看下面例子，将静态调用和普通调用作了对比(方法的调用请看官方手册，本例展示的是属性)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $merchantId = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getMerchantId</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 普通引用和static静态引用对比</span></span><br><span class="line">        <span class="keyword">return</span> [<span class="keyword">self</span>::$merchantId, <span class="keyword">static</span>::$merchantId];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Google</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $merchantId = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Baidu</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $merchantId = <span class="number">200</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ret = Google::getMerchantId(); <span class="comment">// [0, 100]</span></span><br><span class="line">$ret = Baidu::getMerchantId();  <span class="comment">// [0, 200]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="goto关键字支持"><a href="#goto关键字支持" class="headerlink" title="goto关键字支持"></a>goto关键字支持</h3><blockquote>
+<p>goto 关键字可以用来将代码执行点跳转到程序中的另一位置。</p>
+</blockquote>
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><blockquote>
+<p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$arr = array_map(<span class="function"><span class="keyword">function</span><span class="params">($v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'item_'</span> . $v;</span><br><span class="line">&#125;, [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>]);</span><br><span class="line"><span class="comment">// $arr输出为 ['item_2', 'item_4', 'item_6']</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当然在匿名函数内部是无法直接使用外部作用域里的变量的，如果要使用,就必须通过use关键字。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$total = <span class="number">0</span>;</span><br><span class="line">$arr = array_map(<span class="function"><span class="keyword">function</span><span class="params">($v)</span> <span class="title">use</span><span class="params">(&amp;$total)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $total += $v * <span class="number">10</span>;</span><br><span class="line">&#125;, [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>]);</span><br><span class="line"><span class="comment">// $arr输出为 [20, 60, 120]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="新增了两个魔术方法-callStatic-、-invoke"><a href="#新增了两个魔术方法-callStatic-、-invoke" class="headerlink" title="新增了两个魔术方法(__callStatic 、 __invoke)"></a>新增了两个魔术方法(__callStatic 、 __invoke)</h3><blockquote>
+<p>在静态上下文中调用一个不可访问方法时，<strong>callStatic() 会被调用。<br>当尝试以调用函数的方式调用一个对象时，</strong>invoke() 方法会被自动调用。</p>
+</blockquote>
+<h3 id="多行字符串表示法的变化"><a href="#多行字符串表示法的变化" class="headerlink" title="多行字符串表示法的变化"></a>多行字符串表示法的变化</h3><blockquote>
+<p>heredoc结构类似于多行且保持格式的双引号字符串， 而PHP5.3新增的 nowdoc结构是类似于多行且保持格式的单引号字符串。<br>nowdoc结构也用和heredoc结构一样的标记 &lt;&lt;&lt;，但是跟在后面的标识符要用单引号括起来，即 &lt;&lt;&lt;’EOT’。<br>在PHP5.3中heredoc结构也支持使用双引号，如 &lt;&lt;&lt;”EOT”。这样就和heredoc结构在语法一达到了统一。</p>
+</blockquote>
+<h3 id="跑到了类外面的类常量"><a href="#跑到了类外面的类常量" class="headerlink" title="跑到了类外面的类常量"></a>跑到了类外面的类常量</h3><blockquote>
+<p>在PHP5.3.0以后，可以使用 const 关键字在类定义之外定义常量</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CONSTANT = <span class="string">'Hello World'</span>;</span><br><span class="line"><span class="keyword">echo</span> CONSTANT; <span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>和用define定义常量不同的是,使用const关键字定义常量必须处于最顶端的作用区域，因为用此方法是在编译时定义的。<br>这就意味着不能在函数/循环体内/if语句之内用const来定义常量。</p>
+</blockquote>
+<h3 id="三目运算符"><a href="#三目运算符" class="headerlink" title="三目运算符"></a>三目运算符</h3><blockquote>
+<p>在PHP5.3.0之前,如果想直接判断表达式1的结果为true时就返回结果时,得在表达式2中重写一遍表达式1,现在可以省掉这一步了.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$str = <span class="string">'   hello '</span>;</span><br><span class="line"><span class="keyword">echo</span> trim($str) ? trim($str) : <span class="string">'default'</span>; <span class="comment">// hello</span></span><br><span class="line"><span class="keyword">echo</span> trim($str) ?  : <span class="string">'default'</span>; <span class="comment">// hello  PHP &gt;= 5.3.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="PHP5-4-0中的Trait"><a href="#PHP5-4-0中的Trait" class="headerlink" title="PHP5.4.0中的Trait"></a>PHP5.4.0中的Trait</h3><blockquote>
+<p>trait是PHP实现代码复用的又一机制,可很好的解决PHP的单一继承的局限性问题,又可减少添加了多继承的复杂度.可灵活组合trait进行组件式开发</p>
+</blockquote>
+<ul>
+<li>在类中引入trait后,其优先级关系为 基类方法 &lt; trait引入的方法 &lt; 本类中定义的方法, 优先级高的覆盖优先级低的</li>
+<li>可同时引入多个trait, 如果有方法名冲突,可使用insteadof操作符来明确指定使用冲突方法中的哪一个</li>
+<li>trait也可引入其它的trait来组合使用</li>
+<li>trait可定义抽象方法/静态方法</li>
+<li>trait还可以定义属性,这时类中就不可再定义同名的属性</li>
+</ul>
+<h3 id="数组定义有了新花样"><a href="#数组定义有了新花样" class="headerlink" title="数组定义有了新花样"></a>数组定义有了新花样</h3><blockquote>
+<p>之前数组定义都是使用 array(), 到了5.4提供了新的定义语法:使用[]操作符</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]; <span class="comment">//相单于 $a = array(1, 2, 3, 4);</span></span><br><span class="line">$a = [<span class="string">'one'</span> =&gt; <span class="number">1</span>, <span class="string">'two'</span> =&gt; <span class="number">2</span>, <span class="string">'three'</span> =&gt; <span class="number">3</span>, <span class="string">'four'</span> =&gt; <span class="number">4</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="对于函数中返回数组的成员直接访问"><a href="#对于函数中返回数组的成员直接访问" class="headerlink" title="对于函数中返回数组的成员直接访问"></a>对于函数中返回数组的成员直接访问</h3><blockquote>
+<p>之前对于函数中返回的数组,要先赋值给变量,然后再通过下标方式来方式,至少要2步;现在可以一步到位了. </p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="number">50</span>, <span class="number">100</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> a()[<span class="number">1</span>]; <span class="comment">//100</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实例化一个类时，也不需要必须赋值给一个变量再使用，可以直接调用</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">new</span> ExampleModel)-&gt;print();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>同时对于方法的调用也支持表达式计算语法，如上面关于”后期静态绑定”的例子，可以改成这样：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$name = <span class="string">'getMerchantId'</span>; <span class="comment">// 也可以是一个表达式计算结果</span></span><br><span class="line">$ret = Google::&#123;$name&#125;();</span><br><span class="line">$ret = Baidu::&#123;$name&#125;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="二进制直接量支持"><a href="#二进制直接量支持" class="headerlink" title="二进制直接量支持"></a>二进制直接量支持</h3><blockquote>
+<p>PHP5.4中新增二进制直接量，例如：0b001001101</p>
+</blockquote>
+<h3 id="引入生成器"><a href="#引入生成器" class="headerlink" title="引入生成器"></a>引入生成器</h3><blockquote>
+<p>我觉得在PHP5.5中，最值得期待的新特性就是生成器。PHP通过yield关键字添加了对生成器的支持。 生成器提供了一种简单的方法来实现简单的迭代器，而省去实现Iterator接口的开销或复杂性。</p>
+</blockquote>
+<h3 id="新增-finally-关键字"><a href="#新增-finally-关键字" class="headerlink" title="新增 finally 关键字"></a>新增 finally 关键字</h3><blockquote>
+<p>PHP在5.5版本中加入了finally关键字, 这样可以做到不管try语句里有没有抛出异常或错误,在finally里的语句总是会执行.</p>
+</blockquote>
+<h3 id="foreach支持list-函数"><a href="#foreach支持list-函数" class="headerlink" title="foreach支持list()函数"></a>foreach支持list()函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$arr = [</span><br><span class="line">    [<span class="number">15</span>, <span class="string">'liming'</span>],</span><br><span class="line">    [<span class="number">16</span>, <span class="string">'huahua'</span>],</span><br><span class="line">];</span><br><span class="line"><span class="keyword">foreach</span> ($arr <span class="keyword">as</span> <span class="keyword">list</span>($id, $name)) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'id:'</span> . $id .<span class="string">','</span>. <span class="string">'name:'</span> . $name . PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//id:15,name:liming</span></span><br><span class="line"><span class="comment">//id:16,name:huahua</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="empty-函数升级"><a href="#empty-函数升级" class="headerlink" title="empty()函数升级"></a>empty()函数升级</h3><blockquote>
+<p>现在empty()函数支持任意表达式作为参数调用,而之前仅仅支持传入一个变量</p>
+</blockquote>
+<h3 id="数组和字符串支持直接下标引用"><a href="#数组和字符串支持直接下标引用" class="headerlink" title="数组和字符串支持直接下标引用"></a>数组和字符串支持直接下标引用</h3><blockquote>
+<p>数组和字符串都直接访问下标引用,无需先赋值到一个变量再引用</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> [<span class="number">50</span>,<span class="number">100</span>,<span class="number">1000</span>][<span class="number">2</span>]; <span class="comment">// 1000</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'PHP'</span>[<span class="number">1</span>];         <span class="comment">// H</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="新的密码哈希API"><a href="#新的密码哈希API" class="headerlink" title="新的密码哈希API"></a>新的密码哈希API</h3><blockquote>
+<p>这套密码哈希API是专门用于加密密码和校验密码的解决方案. 从5.5之后, 就不应该再使用md5(password) 方式来加密密码,这里提供了更好的方案.</p>
+</blockquote>
+<p><a href="http://php.net/manual/zh/book.password.php" target="_blank" rel="noopener">新的密码哈希API</a></p>
+<h3 id="类常量-属性-函数参数默认值上的变化"><a href="#类常量-属性-函数参数默认值上的变化" class="headerlink" title="类常量/属性/函数参数默认值上的变化"></a>类常量/属性/函数参数默认值上的变化</h3><blockquote>
+<p>在PHP 5.6之前的版本中,必须使用静态值(数值/字符串字面量)来定义类常量、声明属性和指定函数参数默认值, 在新版本中,一切变得更加灵活起来了;现在除了使用这些静态值外,还可以使用表达式(数学运算表达式/字符串连接表达式/类常量引用/数组)来定义.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ONE = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> TWO = ONE * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> ARR = [<span class="string">'a'</span>, <span class="string">'b'</span>];</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> THREE = TWO + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> ONE_THIRD = ONE / <span class="keyword">self</span>::THREE;</span><br><span class="line">    <span class="keyword">const</span> SENTENCE = <span class="string">'The value of THREE is '</span> . <span class="keyword">self</span>::THREE;</span><br><span class="line">    <span class="keyword">const</span> SEX = [<span class="string">'male'</span>, <span class="string">'female'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> $len = <span class="keyword">self</span>::THREE ** <span class="number">2</span>; <span class="comment">//幂运算</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">func1</span><span class="params">($a = ONE + self::THREE)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">func2</span><span class="params">($sex = self::SEX)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $sex;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$c = <span class="keyword">new</span> C;</span><br><span class="line"><span class="keyword">echo</span> $c-&gt;func1(). PHP_EOL; <span class="comment">// 4</span></span><br><span class="line"><span class="keyword">print</span>\_r($c-&gt;func2()). PHP_EOL; <span class="comment">//Array([0] =&gt; male  [1] =&gt; female)</span></span><br><span class="line"><span class="keyword">echo</span> C::SENTENCE . PHP_EOL; <span class="comment">// The value of THREE is 3</span></span><br><span class="line"><span class="keyword">echo</span> C::SEX[<span class="number">1</span>] . PHP_EOL; <span class="comment">//female</span></span><br><span class="line"><span class="keyword">echo</span> $c-&gt;len . PHP_EOL; <span class="comment">// 9</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-…-运算符定义可变长参数的函数"><a href="#使用-…-运算符定义可变长参数的函数" class="headerlink" title="使用 … 运算符定义可变长参数的函数"></a>使用 … 运算符定义可变长参数的函数</h3><blockquote>
+<p>在函数定义处的形参列表里使用 …运算符后接变量名的方式可以让此形参变量接收到除了前面已经被其它形参变量接收到的所有的参数</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">($req, $opt = null, ...$params)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// $params 是一个包含了剩余参数的数组</span></span><br><span class="line">    printf(<span class="string">'$req: %d; $opt: %d; number of params: %d'</span>.<span class="string">"\n"</span>,</span><br><span class="line">           $req, $opt, count($params));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f(<span class="number">1</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//上例输出:</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">0</span>; number of params: <span class="number">0</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">0</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">1</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">2</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-…-运算符进行参数展开"><a href="#使用-…-运算符进行参数展开" class="headerlink" title="使用 … 运算符进行参数展开"></a>使用 … 运算符进行参数展开</h3><blockquote>
+<p>在调用函数的时候，使用 … 运算符， 将数组和可遍历对象展开为函数参数。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">($a, $b, $c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $a + $b + $c;</span><br><span class="line">&#125;</span><br><span class="line">$operators = [<span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">echo</span> add(<span class="number">1</span>, ...$operators) . PHP_EOL; <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//系统函数也可以</span></span><br><span class="line">$arr = [<span class="string">'helloworld'</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">echo</span> substr(...$arr); <span class="comment">// low</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在PhpRedis扩展里,sAdd()方法使用这种方式调用就更方便</span></span><br><span class="line">$redis-&gt;sAdd(<span class="string">'key1'</span> , <span class="string">'member2'</span>, <span class="string">'member3'</span>); <span class="comment">//普通调用</span></span><br><span class="line"></span><br><span class="line">$memberArr = [<span class="string">'member2'</span>, <span class="string">'member3'</span>];<span class="comment">// 参数展开调用</span></span><br><span class="line">$redis-&gt;sAdd(<span class="string">'key1'</span>, ...$memberArr);</span><br></pre></td></tr></table></figure>
+
+<h3 id="幂运算表达式"><a href="#幂运算表达式" class="headerlink" title="幂运算表达式"></a>幂运算表达式</h3><blockquote>
+<p>加入右连接运算符 ** 来进行幂运算。同时也支持简写的 **= 运算符。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="number">2</span>;</span><br><span class="line">$a **= <span class="number">3</span>; <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="命名空间特性中use运算符功能增强"><a href="#命名空间特性中use运算符功能增强" class="headerlink" title="命名空间特性中use运算符功能增强"></a>命名空间特性中use运算符功能增强</h3><blockquote>
+<p>在之前的版本中只支持导入外部的类,在PHP5.6中use支持导入外部的函数和常量。对应的结构为 use function 和 use const。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">Name</span>\<span class="title">Space</span>\<span class="title">CONSTANT</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">Name</span>\<span class="title">Space</span>\<span class="title">func</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> CONSTANT;</span><br><span class="line">func();</span><br></pre></td></tr></table></figure>
+
+<h3 id="加入-debugInfo-魔术方法"><a href="#加入-debugInfo-魔术方法" class="headerlink" title="加入__debugInfo()魔术方法"></a>加入__debugInfo()魔术方法</h3><blockquote>
+<p>当使用var_dump()输出对象的时候，可以通过编写__debugInfo()函数来控制要输出的属性和值。</p>
+</blockquote>
+
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/php-new-features-1/" data-id="ck664iurd0007n4r5bv556dc4"
+        class="article-share-link">分享</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2018/php-new-features-2/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PHP新特性(php7.0-php7.2)
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/php-official-documentation-is-added-function/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">官方文档拾遗(函数篇)</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        notify: false,
+        verify: '',
+        app_id: '5dy7OgzheRRkbCxHaYXtYLuv-gzGzoHsz',
+        app_key: 'MyvhEgiC8bmPsNmvFHmsFYND',
+        path: window.location.pathname,
+        avatar: 'mp',
+        placeholder: '欢迎畅所欲言~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2020
+        watson
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+      <aside class="sidebar">
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.jpg" alt="格物致知"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about-me">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+<script>
+  var typed = new Typed("#subtitle", {
+    strings: ['一个Web开发者写给未来的自己的札记','古之立大事者，不惟有超世之才','亦必有坚忍不拔之志。'],
+    startDelay: 0,
+    typeSpeed: 200,
+    loop: true,
+    backSpeed: 100,
+    showCursor: true
+    });
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer:'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+   
+  <meta name="keywords" content="LNMP博客" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    官方文档拾遗(基础篇) |  格物致知
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-php-official-documentation-is-added-basic" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  官方文档拾遗(基础篇)
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/php-official-documentation-is-added-basic/" class="article-date">
+  <time datetime="2018-05-06T07:15:18.000Z" itemprop="datePublished">2018-05-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.7k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近又看了一遍PHP官方文档。说句实话，PHP官方文档的组织还算不错的，条理清晰，链接合理；尤其页面下方的开发者自己撰写的评论，更是文档的精华。所以我觉得多看几遍文档并且勤于动手实践，就可以超过大多数人了。现将我的收获总结如下，欢迎品尝。</p>
+<a id="more"></a>
+
+<h3 id="类型转换问题"><a href="#类型转换问题" class="headerlink" title="类型转换问题"></a>类型转换问题</h3><p><code>var_dump(0 == &#39;all&#39;); // bool(true)</code></p>
+<blockquote>
+<p>在此处要小心, all和0比较时, 字符串all被转化为数值类型0了。 </p>
+</blockquote>
+<p>在switch语句中,尤其要注意此问题:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="string">"a"</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"0"</span>; <span class="comment">// 输出0</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"a"</span>: </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"a"</span>; <span class="comment">// 不会执行到这里，和上例一样,a已经转化为数值类型0.</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数字连接问题"><a href="#数字连接问题" class="headerlink" title="数字连接问题"></a>数字连接问题</h3><blockquote>
+<p>用字符串连接符(.)连接2个整型数字时，可在连接符前后加空格以不至于变成小数</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="number">1</span> . <span class="number">2</span>; <span class="comment">//prints the string "12"</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1.2</span>;   <span class="comment">//prints the number 1.2</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span>+<span class="number">2</span>;   <span class="comment">//prints the number 3</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="函数名及变量名大小写问题"><a href="#函数名及变量名大小写问题" class="headerlink" title="函数名及变量名大小写问题"></a>函数名及变量名大小写问题</h3><blockquote>
+<p>PHP函数调用是不区别大小写的，而变量名区别大小写。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">aA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'lamp'</span>;</span><br><span class="line">&#125;</span><br><span class="line">AA(); <span class="comment">//lamp</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">'hello'</span>;</span><br><span class="line"><span class="keyword">echo</span> $A; <span class="comment">//Notice: Undefined variable: A</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="echo-的返回值问题"><a href="#echo-的返回值问题" class="headerlink" title="echo 的返回值问题"></a>echo 的返回值问题</h3><blockquote>
+<p>echo 不是一个函数,所以没有返回值;因而不能用在需要有返回值的表达式中</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$value = <span class="string">'lamp'</span>;</span><br><span class="line"><span class="keyword">isset</span>($value) <span class="keyword">AND</span> <span class="keyword">echo</span> $value; <span class="comment">// PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果真得想在这样的表达式中输出变量值,可以用print函数代替, 因为print函数问题返回1</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">isset</span>($value) <span class="keyword">AND</span> <span class="keyword">print</span>($value); <span class="comment">// lamp</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="从函数里返回引用问题"><a href="#从函数里返回引用问题" class="headerlink" title="从函数里返回引用问题"></a>从函数里返回引用问题</h3><blockquote>
+<p>从函数返回一个引用，必须在函数声明和指派返回值给一个变量时都使用引用运算符 &amp;; 如果只在一处加上&amp;,则并不会返回引用</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">returns_reference</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $someref;</span><br><span class="line">&#125;</span><br><span class="line">$newref = &amp; returns_reference();</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组中的-运算符"><a href="#数组中的-运算符" class="headerlink" title="数组中的+运算符"></a>数组中的+运算符</h3><blockquote>
+<p> <em>+</em> 运算符把右边的数组元素附加到左边的数组后面. 两个数组中都有的键名，则只用左边数组中的，右边的被忽略。同理，对于索引数组也是如此，同一索引处的值会使用前面数组的值。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="keyword">array</span>(<span class="string">"a"</span> =&gt; <span class="string">"apple"</span>, <span class="string">"b"</span> =&gt; <span class="string">"banana"</span>);</span><br><span class="line">$b = <span class="keyword">array</span>(<span class="string">"a"</span> =&gt; <span class="string">"pear"</span>, <span class="string">"b"</span> =&gt; <span class="string">"strawberry"</span>, <span class="string">"c"</span> =&gt; <span class="string">"cherry"</span>);</span><br><span class="line">print_r($a + $b);</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">    [a] =&gt; apple</span><br><span class="line">    [b] =&gt; banana</span><br><span class="line">    [c] =&gt; cherry</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">array</span>(<span class="string">'one'</span>,<span class="string">'two'</span>);</span><br><span class="line">$b = <span class="keyword">array</span>(<span class="string">'three'</span>,<span class="string">'four'</span>,<span class="string">'five'</span>);</span><br><span class="line">print_r ($a + $b);</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">    [<span class="number">0</span>] =&gt; one</span><br><span class="line">    [<span class="number">1</span>] =&gt; two</span><br><span class="line">    [<span class="number">2</span>] =&gt; five</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="递增／递减-–-运算符"><a href="#递增／递减-–-运算符" class="headerlink" title="递增／递减(++/–)运算符"></a>递增／递减(++/–)运算符</h3><blockquote>
+<p>递增／递减运算符不但能递增／递减整型数字，还能递增／递减字符等</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$s = <span class="string">'W'</span>;</span><br><span class="line"><span class="keyword">for</span> ($n=<span class="number">0</span>; $n&lt;<span class="number">6</span>; $n++) &#123;</span><br><span class="line">    <span class="keyword">echo</span> ++$s . PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出为:</span></span><br><span class="line">X</span><br><span class="line">Y</span><br><span class="line">Z</span><br><span class="line">AA</span><br><span class="line">AB</span><br><span class="line">AC</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>是不是发现可以很方便的生成出excel的横向坐标轴?</p>
+</blockquote>
+<h3 id="运算符的结合性"><a href="#运算符的结合性" class="headerlink" title="运算符的结合性"></a>运算符的结合性</h3><blockquote>
+<p>如果运算符优先级相同，那运算符的结合方向决定了该如何运算。例如，”-“是左联(从左往右看)的，那么 1 - 2 - 3 就等同于 (1 - 2) - 3 并且结果是 -4. 另外一方面，”=”是右联(从右往左看)的，所以 $a = $b = $c 等同于 $a = ($b = $c)。<br><em>观察可知只有单目运算符和(组合)赋值运算符为右联的。</em></p>
+</blockquote>
+<h3 id="未定义常量使用问题"><a href="#未定义常量使用问题" class="headerlink" title="未定义常量使用问题"></a>未定义常量使用问题</h3><blockquote>
+<p>未定义某常量就直接使用该常量时会被评估为true.所以将常量放在if判断里最好要明确判断其值</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DEBUG并没有在上下文中被定义为常量</span></span><br><span class="line"><span class="keyword">if</span> (DEBUG) &#123;</span><br><span class="line">   <span class="keyword">echo</span> <span class="string">'lamp'</span>; <span class="comment">//DEBUG未定义，会报Notice: Use of undefined constant DEBUG. 但是依然能输出lamp.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (DEBUG == <span class="keyword">true</span>) &#123;</span><br><span class="line">   <span class="keyword">echo</span> <span class="string">'lamp'</span>;<span class="comment">//对常量值做判断就不会在没有定义时执行if内部的语句。仅仅是报notice.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="更简洁的类型转换技巧"><a href="#更简洁的类型转换技巧" class="headerlink" title="更简洁的类型转换技巧"></a>更简洁的类型转换技巧</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$string  = <span class="string">'12345.678'</span>;</span><br><span class="line">$float   = +$string; </span><br><span class="line">$integer = <span class="number">0</span>|$string;</span><br><span class="line">$boolean = !!$string;</span><br><span class="line"></span><br><span class="line">var_dump($float);   <span class="comment">//float(12345.678)</span></span><br><span class="line">var_dump($integer); <span class="comment">//int(12345)</span></span><br><span class="line">var_dump($boolean); <span class="comment">//bool(true)</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="字符串中的字符访问"><a href="#字符串中的字符访问" class="headerlink" title="字符串中的字符访问"></a>字符串中的字符访问</h3><blockquote>
+<p>字符串也可以像数组那样使用中括号的索引下标方式访问，也可是用大括号的索引下标方式访问</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$a    = <span class="string">'car'</span>; <span class="comment">// $a is a string</span></span><br><span class="line">$a[<span class="number">0</span>] = <span class="string">'b'</span>;   <span class="comment">// $a is still a string</span></span><br><span class="line">$a&#123;<span class="number">1</span>&#125; = <span class="string">'o'</span>;</span><br><span class="line"><span class="keyword">echo</span> $a;       <span class="comment">// bor</span></span><br><span class="line">$a[<span class="string">'data'</span>] = <span class="string">'a'</span>; <span class="comment">//报错 Warning: Illegal string offset 'data'</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组的键类型及转换"><a href="#数组的键类型及转换" class="headerlink" title="数组的键类型及转换"></a>数组的键类型及转换</h3><blockquote>
+<p>数组的key 可以是 integer 或者 string。value 可以是任意类型。</p>
+</blockquote>
+<p>此外 key 会有如下的强制转换：</p>
+<ul>
+<li>包含有合法整型值的字符串会被转换为整型。例如键名 “8” 实际会被储存为 8。但是 “08” 则不会强制转换，因为其不是一个合法的十进制数值。</li>
+<li>浮点数也会被转换为整型，意味着其小数部分会被舍去。例如键名 8.7 实际会被储存为 8。</li>
+<li>布尔值也会被转换成整型。即键名 true 实际会被储存为 1 而键名 false 会被储存为 0。</li>
+<li>Null 会被转换为空字符串，即键名 null 实际会被储存为 “”。</li>
+<li>数组和对象不能被用为键名。坚持这么做会导致警告：Illegal offset type。</li>
+<li>如果在数组定义中多个单元都使用了同一个键名，则只使用了最后一个，之前的都被覆盖了。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">1</span>    =&gt; <span class="string">"a"</span>,</span><br><span class="line">    <span class="string">"1"</span>  =&gt; <span class="string">"b"</span>,</span><br><span class="line">    <span class="number">1.5</span>  =&gt; <span class="string">"c"</span>,</span><br><span class="line">    <span class="keyword">true</span> =&gt; <span class="string">"d"</span>,</span><br><span class="line">);</span><br><span class="line">var_dump($array); <span class="comment">// array(1 =&gt; "d")</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组的下标访问"><a href="#数组的下标访问" class="headerlink" title="数组的下标访问"></a>数组的下标访问</h3><blockquote>
+<p>方括号和花括号都可以用来访问数组单元（例如 $array[42] 和 $array{42} 效果相同）。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">"foo"</span> =&gt; <span class="string">"bar"</span>,</span><br><span class="line">    <span class="number">42</span>    =&gt; <span class="number">24</span>,</span><br><span class="line">);</span><br><span class="line">var_dump($array[<span class="number">42</span>]); <span class="comment">// int(24)</span></span><br><span class="line">var_dump($array&#123;<span class="number">42</span>&#125;); <span class="comment">// int(24)</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="浮点数计算的注意事项"><a href="#浮点数计算的注意事项" class="headerlink" title="浮点数计算的注意事项"></a>浮点数计算的注意事项</h3><blockquote>
+<p>php中的浮点数也是遵循IEEE754规范定义(应该是C遵循)的那种存储方式,所以对于浮点数计算有精度问题, 解决方案就像下例提到的<br>使用BC Math 扩展或GMP扩展</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> intval(<span class="number">19.31</span> * <span class="number">100</span>); <span class="comment">//1930</span></span><br><span class="line"><span class="keyword">echo</span> bcmul(<span class="number">19.31</span>, <span class="number">100</span>); <span class="comment">//1931</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="unset函数都干了什么"><a href="#unset函数都干了什么" class="headerlink" title="unset函数都干了什么"></a>unset函数都干了什么</h3><blockquote>
+<p>由下例可知,unset函数斩断变量名到值的联系(引用), 因此当$a被unset掉后,$a变量名与5这个值就失去了联系,但是$b和5这个<br>值的联系还在,所以$b可以正常输出. 当$a被赋值为NULL后,实际上是把之前存储5这块内存设置为了NULL,所以这回$b也被设置成了NULL</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="number">5</span>;</span><br><span class="line">$b = &amp; $a;</span><br><span class="line"><span class="keyword">unset</span>($a);</span><br><span class="line"><span class="keyword">print</span> <span class="string">"b $b"</span>; <span class="comment">// b 5</span></span><br><span class="line"></span><br><span class="line">$a = <span class="number">5</span>;</span><br><span class="line">$b = &amp; $a;</span><br><span class="line">$a = <span class="keyword">NULL</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">"b $b"</span>; <span class="comment">//b </span></span><br><span class="line"></span><br><span class="line">var_dump($b); <span class="comment">//NULL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="break关键字和continue关键字后面的数字"><a href="#break关键字和continue关键字后面的数字" class="headerlink" title="break关键字和continue关键字后面的数字"></a>break关键字和continue关键字后面的数字</h3><p>break关键字用于结束当前for，foreach，while，do-while 或者switch结构的执行，另外break还可以接受一个可选的数字参数来决定跳出几重循环。这对复杂的循环嵌套非常有用；同理，continue关键字也支持</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (++$i) &#123;</span><br><span class="line">    <span class="keyword">switch</span> ($i) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"At 5"</span>;</span><br><span class="line">        <span class="keyword">break</span> <span class="number">1</span>; <span class="comment">//只退出 switch</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"At 10"</span>;</span><br><span class="line">        <span class="keyword">break</span> <span class="number">2</span>; <span class="comment">//退出 switch 和 while 循环</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/php-official-documentation-is-added-basic/" data-id="ck664iur60001n4r5e4nk3eef"
+        class="article-share-link">分享</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2018/php-official-documentation-is-added-function/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            官方文档拾遗(函数篇)
+          
+        </div>
+      </a>
+    
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        notify: false,
+        verify: '',
+        app_id: '5dy7OgzheRRkbCxHaYXtYLuv-gzGzoHsz',
+        app_key: 'MyvhEgiC8bmPsNmvFHmsFYND',
+        path: window.location.pathname,
+        avatar: 'mp',
+        placeholder: '欢迎畅所欲言~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2020
+        watson
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+      <aside class="sidebar">
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.jpg" alt="格物致知"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about-me">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+<script>
+  var typed = new Typed("#subtitle", {
+    strings: ['一个Web开发者写给未来的自己的札记','古之立大事者，不惟有超世之才','亦必有坚忍不拔之志。'],
+    startDelay: 0,
+    typeSpeed: 200,
+    loop: true,
+    backSpeed: 100,
+    showCursor: true
+    });
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer:'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo 快速发布一篇文章</title>
+    <url>/2020/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>写作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PHP新特性(php7.0-php7.2)</title>
+    <url>/2018/php-new-features-2/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
+<p>PHP在7发布后，仍有大量的新特性被加入出来。我们再来了解一下。我们可以在PHP官方文档的<a href="http://php.net/manual/zh/appendices.php" target="_blank" rel="noopener">附录</a>查阅相关更详细<br>内容。如果你想动手运行及演练各版本的示例代码,可以使用这个<a href="https://3v4l.org/" target="_blank" rel="noopener">网站</a>, 它可以向你展示PHP各版本下的运行结果。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="标量类型声明及返回值类型声明"><a href="#标量类型声明及返回值类型声明" class="headerlink" title="标量类型声明及返回值类型声明"></a>标量类型声明及返回值类型声明</h3><blockquote>
+<p>在PHP7中,函数和方法上都可以使用标量类型来对参数及返回值进行类型声明了.如果传入的参数类型及返回值类型<br>与声明的类型不匹配，将会报错。这里的类型匹配分两种情况，就是说标量类型声明有两种模式: 强制(默认)和严格模式。<br>在强制模式下,如整数、浮点数、整数字符串都可与声明的整型(int)匹配。而通过定义在文件首行的<code>declare(strict_types=1);</code>声明方式<br>将模式转为严格模式后，情况就完全变了。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sumOfInts</span><span class="params">(int ...$ints)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> array_sum($ints);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(sumOfInts(<span class="number">2</span>, <span class="string">'3'</span>, <span class="number">4.1</span>)); <span class="comment">// int(9)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>转化为严格模式：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span>(strict_types=<span class="number">1</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sumOfInts</span><span class="params">(int ...$ints)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> array_sum($ints);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(sumOfInts(<span class="number">2</span>, <span class="string">'3'</span>, <span class="number">4.1</span>)); <span class="comment">// Fatal error: Uncaught TypeError: Argument 2 passed to sumOfInts() must be of the type integer, string given</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="null合并运算符"><a href="#null合并运算符" class="headerlink" title="null合并运算符"></a>null合并运算符</h3><blockquote>
+<p>我们经常在一条语句中同时使用三目运算符和isset()的情况：如先判断某变量有没有赋值，如果没有就使用默认值。PHP7中<br>专门为此需求添加了一个语法糖。我们暂且称为null合并运算符(??)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此两行代码完全等价</span></span><br><span class="line"><span class="comment">//第一行代码表示把双问号前面的变量代入到isset()函数,isset()函数返回值决定整个表达式的值是这个变量还是双问号后面的值。</span></span><br><span class="line"><span class="comment">//按isset()函数的特性, 即使双问号前面的变量为空字符串,也是返回true;除非这个值没定义或被赋值为null</span></span><br><span class="line"><span class="keyword">echo</span> $username = $_GET[<span class="string">'user'</span>] ?? <span class="string">'nobody'</span>;</span><br><span class="line"><span class="keyword">echo</span> $username = <span class="keyword">isset</span>($_GET[<span class="string">'user'</span>]) ? $_GET[<span class="string">'user'</span>] : <span class="string">'nobody'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//还可以使用这种链式判断的方式,会先判断$_GET['user'],如果没赋值就再判断$_POST['user'],如果还没赋值就使用后面的值。</span></span><br><span class="line"><span class="keyword">echo</span> $username = $_GET[<span class="string">'user'</span>] ?? $_POST[<span class="string">'user'</span>] ?? <span class="string">'nobody'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="太空船操作符（组合比较符）"><a href="#太空船操作符（组合比较符）" class="headerlink" title="太空船操作符（组合比较符）"></a>太空船操作符（组合比较符）</h3><blockquote>
+<p>太空船操作符用于比较两个表达式。当$a小于、等于或大于$b时它分别返回-1、0或1</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="number">1</span> &lt;=&gt; <span class="number">1</span>; <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span> &lt;=&gt; <span class="number">2</span>; <span class="comment">// -1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">2</span> &lt;=&gt; <span class="number">1</span>; <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该运算符在排序回调函数里使用得最多,一行代码即可搞定之前的2次if判断。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = <span class="keyword">array</span>(<span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">1</span>);</span><br><span class="line">usort($a, <span class="function"><span class="keyword">function</span><span class="params">($a, $b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $a &lt;=&gt; $b;</span><br><span class="line">&#125;);</span><br><span class="line">print_r($a);</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出排序后的结果</span></span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">    [<span class="number">0</span>] =&gt; <span class="number">1</span></span><br><span class="line">    [<span class="number">1</span>] =&gt; <span class="number">2</span></span><br><span class="line">    [<span class="number">2</span>] =&gt; <span class="number">3</span></span><br><span class="line">    [<span class="number">3</span>] =&gt; <span class="number">5</span></span><br><span class="line">    [<span class="number">4</span>] =&gt; <span class="number">6</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="define-定义常量数组"><a href="#define-定义常量数组" class="headerlink" title="define()定义常量数组"></a>define()定义常量数组</h3><blockquote>
+<p>现在 define()函数可以用来定义数组类型的常量了</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">define(<span class="string">'ANIMALS'</span>, [</span><br><span class="line">    <span class="string">'dog'</span>,</span><br><span class="line">    <span class="string">'cat'</span>,</span><br><span class="line">    <span class="string">'bird'</span></span><br><span class="line">]);</span><br><span class="line"><span class="keyword">echo</span> ANIMALS[<span class="number">1</span>]; <span class="comment">// outputs "cat"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名类"><a href="#匿名类" class="headerlink" title="匿名类"></a>匿名类</h3><blockquote>
+<p>现在支持通过new class来实例化一个匿名类，这可以用来替代一些“用后即焚”的完整类定义。<br>匿名类除了没有类名、只能使用一次外,和普通类没有任何区别。同样可以传递参数到匿名类的构造器,也可以继承其他类、实现接口、使用trait等。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// PHP 7 之前的代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">log</span><span class="params">($msg)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> $msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$util-&gt;setLogger(<span class="keyword">new</span> Logger());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用了 PHP 7+ 后的代码</span></span><br><span class="line">$util-&gt;setLogger(<span class="keyword">new</span> <span class="class"><span class="keyword">class</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">log</span><span class="params">($msg)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> $msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="http://php.net/manual/zh/language.oop5.anonymous.php" target="_blank" rel="noopener">匿名类的官方说明</a></p>
+</blockquote>
+<h3 id="use关键字组合导入"><a href="#use关键字组合导入" class="headerlink" title="use关键字组合导入"></a>use关键字组合导入</h3><blockquote>
+<p>从同一命名空间导入的类、函数和常量现在可以通过单个use语句一次性导入了。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Pre PHP 7 code</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ClassA</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ClassB</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ClassC</span> <span class="title">as</span> <span class="title">C</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">fn_a</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">fn_b</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">fn_c</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ConstA</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ConstB</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ConstC</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// PHP 7+ code</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\&#123;<span class="title">ClassA</span>, <span class="title">ClassB</span>, <span class="title">ClassC</span> <span class="title">as</span> <span class="title">C</span>&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\&#123;<span class="title">fn_a</span>, <span class="title">fn_b</span>, <span class="title">fn_c</span>&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\&#123;<span class="title">ConstA</span>, <span class="title">ConstB</span>, <span class="title">ConstC</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增整除函数intdiv"><a href="#新增整除函数intdiv" class="headerlink" title="新增整除函数intdiv()"></a>新增整除函数intdiv()</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">var_dump(intdiv(<span class="number">10</span>, <span class="number">3</span>));  <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="可为空（Nullable）类型"><a href="#可为空（Nullable）类型" class="headerlink" title="可为空（Nullable）类型"></a>可为空（Nullable）类型</h3><blockquote>
+<p>上面说到PHP7中在传入函数参数与返回的结果上可以指定类型,但是在实际开发中，经常遇到返回结果为空的情况，这就又与指定的返回类型不匹配了。在PHP7.1中<br>在指定类型上又添加了可空特性,就是说传入的参数或者函数返回的结果要么是给定的类型，要么是null。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">(?string $name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    var_dump($name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'tpunt'</span>); <span class="comment">// string(5) "tpunt"</span></span><br><span class="line">test(<span class="keyword">null</span>); <span class="comment">// NULL</span></span><br><span class="line">test(); <span class="comment">// Fatal error: Uncaught ArgumentCountError: Too few arguments to function test(), 0 passed</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>再看一个可空返回值的情况,因为返回值为可空,所以返回值可为string类型,也可为null.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types=<span class="number">1</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">role</span><span class="params">(string $name)</span> :?<span class="title">string</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(in_array($name, <span class="keyword">array</span>(<span class="string">'admin'</span>, <span class="string">'manager'</span>)))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'admin'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(role(<span class="string">'admin'</span>)); <span class="comment">// string(5) "admin"</span></span><br><span class="line">var_dump(role(<span class="string">'trainee'</span>)); <span class="comment">// NULL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="void函数"><a href="#void函数" class="headerlink" title="void函数"></a>void函数</h3><blockquote>
+<p>PHP7.1中背后引入的void函数与C语言中类似.返回值声明为void类型的方法要么省去return语句，要么使用一个空return语句。对于void函数来说，null也不是一个合法的返回值。<br>下面来自官网的例子就可很好说明void函数的用途。(使用传引用的方式后就不需要返回值)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span><span class="params">(&amp;$left, &amp;$right)</span> : <span class="title">void</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ($left === $right) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $tmp = $left;</span><br><span class="line">    $left = $right;</span><br><span class="line">    $right = $tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = <span class="number">2</span>;</span><br><span class="line">var_dump(swap($a, $b)); <span class="comment">// NULL 获取一个void方法的返回值会得到null,并且不会产生任何警告</span></span><br><span class="line">var_dump($a); <span class="comment">// int(2)</span></span><br><span class="line">var_dump($b); <span class="comment">// int(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Symmetric-array-destructuring"><a href="#Symmetric-array-destructuring" class="headerlink" title="Symmetric array destructuring"></a>Symmetric array destructuring</h3><blockquote>
+<p>我们之前对二维数组循环时，拿到的都是那个完整的第二维数组,如果我们只是想处理第二维数组的某个KEY而不需要完整的第二维数组时，<br>这个语法就很有用了。我们可以拿到第二维数组的某个值给一个变量，之后在循环体中直接使用这个变量即可。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$data = [</span><br><span class="line">    <span class="number">1</span> =&gt; [<span class="string">'name'</span> =&gt; <span class="string">'Tom'</span>, <span class="string">'age'</span> =&gt; <span class="number">15</span>],</span><br><span class="line">    <span class="number">2</span> =&gt; [<span class="string">'name'</span> =&gt; <span class="string">'Fred'</span>, <span class="string">'age'</span> =&gt; <span class="number">20</span>],</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// PHP7.1+</span></span><br><span class="line"><span class="keyword">foreach</span>($data <span class="keyword">as</span> $id =&gt; [<span class="string">'age'</span> =&gt; $age] )&#123;</span><br><span class="line">    <span class="keyword">echo</span> $id .<span class="string">':'</span>. ($age+<span class="number">1</span>) . PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// PHP 7.1-</span></span><br><span class="line"><span class="keyword">foreach</span>($data <span class="keyword">as</span> $id =&gt; $row )&#123;</span><br><span class="line">    <span class="keyword">echo</span> $id .<span class="string">':'</span>. ($row[<span class="string">'age'</span>]+<span class="number">1</span>) . PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>除此以外，短数组语法[]还添加了一个本事，就是可以实现和list()函数一样的功能</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$data = [</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'Tom'</span>],</span><br><span class="line">    [<span class="number">2</span>, <span class="string">'Fred'</span>],</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// list() style</span></span><br><span class="line"><span class="keyword">list</span>($id1, $name1) = $data[<span class="number">0</span>]; <span class="comment">// 变量$id1为1,变量$name1为Tom</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [] style</span></span><br><span class="line">[$id1, $name1] = $data[<span class="number">0</span>]; <span class="comment">// 变量$id1为1,变量$name1为Tom</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="类常量可见性设置"><a href="#类常量可见性设置" class="headerlink" title="类常量可见性设置"></a>类常量可见性设置</h3><blockquote>
+<p>在PHP7.1中可以对类常量进行可见性设置</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstDemo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> PUBLIC_CONST_A = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> PUBLIC_CONST_B = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">const</span> PROTECTED_CONST = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> PRIVATE_CONST = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多异常捕获处理"><a href="#多异常捕获处理" class="headerlink" title="多异常捕获处理"></a>多异常捕获处理</h3><blockquote>
+<p>一个catch语句块现在可以通过管道字符(|)来实现多个异常的捕获。这对于需要同时处理来自不同类的不同异常时很有用。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// some code</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (FirstException | SecondException $e) &#123;</span><br><span class="line">    <span class="comment">// handle first and second exceptions</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="list-现在支持键名"><a href="#list-现在支持键名" class="headerlink" title="list()现在支持键名"></a>list()现在支持键名</h3><blockquote>
+<p>我们知道以前的版本中不支持使用关联数组对list()函数的赋值(只支持索引从0开始的索引数组赋值)，在PHP7.1版本中添加了对关联数组的支持</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$info = [<span class="string">'a'</span> =&gt; <span class="string">'coffee'</span>, <span class="string">'b'</span> =&gt; <span class="string">'brown'</span>, <span class="string">'c'</span> =&gt; <span class="string">'caffeine'</span>];</span><br><span class="line"><span class="keyword">list</span>(<span class="string">'a'</span> =&gt; $drink, <span class="string">'b'</span> =&gt; $color, <span class="string">'c'</span> =&gt; $power) = $info;</span><br><span class="line">print_r($drink); <span class="comment">// coffee</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="支持为负的字符串偏移量"><a href="#支持为负的字符串偏移量" class="headerlink" title="支持为负的字符串偏移量"></a>支持为负的字符串偏移量</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">var_dump(<span class="string">"abcdef"</span>[<span class="number">-2</span>]); <span class="comment">// e</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="允许重写抽象方法-Abstract-method"><a href="#允许重写抽象方法-Abstract-method" class="headerlink" title="允许重写抽象方法(Abstract method)"></a>允许重写抽象方法(Abstract method)</h3><blockquote>
+<p>在PHP7.2中抽象方法也可以被子类重写</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PHP新特性(php5.3-php5.6)</title>
+    <url>/2018/php-new-features-1/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
+<p>从PHP5.3开始到PHP5.6版本,PHP每次版本更新不但做到了最大限度的向后兼容,同时还添加了许多新特性;<br>为我们开发现代WEB项目提供了极大的方便。我们可以在PHP官方文档的<a href="http://php.net/manual/zh/appendices.php" target="_blank" rel="noopener">附录</a>查阅相关更详细<br>内容。如果你想动手运行及演练各版本的示例代码,可以使用这个<a href="https://3v4l.org/" target="_blank" rel="noopener">网站</a>, 它可以向你展示PHP各版本下的运行结果。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>在php5.3中，终于引入了命名空间。通俗的理解,命名空间就是一种文件级封装、定义文件级作用域的方式。具体的作用就是解决用户自己编写的代码与项目内部同事之间、PHP内部、引入的第三方的类、函数、常量的命名冲突问题。 具体使用请见手册。</p>
+<h3 id="后期静态绑定"><a href="#后期静态绑定" class="headerlink" title="后期静态绑定"></a>后期静态绑定</h3><p>在PHP5.3中引入了后期静态绑定特性，用于在类的继承逻辑中引用静态调用的方法或属性；在此逻辑中静态调用方法或属性时，使用的不再是当前类，而是调用的类。请看下面例子，将静态调用和普通调用作了对比(方法的调用请看官方手册，本例展示的是属性)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $merchantId = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getMerchantId</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 普通引用和static静态引用对比</span></span><br><span class="line">        <span class="keyword">return</span> [<span class="keyword">self</span>::$merchantId, <span class="keyword">static</span>::$merchantId];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Google</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $merchantId = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Baidu</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $merchantId = <span class="number">200</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ret = Google::getMerchantId(); <span class="comment">// [0, 100]</span></span><br><span class="line">$ret = Baidu::getMerchantId();  <span class="comment">// [0, 200]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="goto关键字支持"><a href="#goto关键字支持" class="headerlink" title="goto关键字支持"></a>goto关键字支持</h3><blockquote>
+<p>goto 关键字可以用来将代码执行点跳转到程序中的另一位置。</p>
+</blockquote>
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><blockquote>
+<p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$arr = array_map(<span class="function"><span class="keyword">function</span><span class="params">($v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'item_'</span> . $v;</span><br><span class="line">&#125;, [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>]);</span><br><span class="line"><span class="comment">// $arr输出为 ['item_2', 'item_4', 'item_6']</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当然在匿名函数内部是无法直接使用外部作用域里的变量的，如果要使用,就必须通过use关键字。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$total = <span class="number">0</span>;</span><br><span class="line">$arr = array_map(<span class="function"><span class="keyword">function</span><span class="params">($v)</span> <span class="title">use</span><span class="params">(&amp;$total)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $total += $v * <span class="number">10</span>;</span><br><span class="line">&#125;, [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>]);</span><br><span class="line"><span class="comment">// $arr输出为 [20, 60, 120]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="新增了两个魔术方法-callStatic-、-invoke"><a href="#新增了两个魔术方法-callStatic-、-invoke" class="headerlink" title="新增了两个魔术方法(__callStatic 、 __invoke)"></a>新增了两个魔术方法(__callStatic 、 __invoke)</h3><blockquote>
+<p>在静态上下文中调用一个不可访问方法时，<strong>callStatic() 会被调用。<br>当尝试以调用函数的方式调用一个对象时，</strong>invoke() 方法会被自动调用。</p>
+</blockquote>
+<h3 id="多行字符串表示法的变化"><a href="#多行字符串表示法的变化" class="headerlink" title="多行字符串表示法的变化"></a>多行字符串表示法的变化</h3><blockquote>
+<p>heredoc结构类似于多行且保持格式的双引号字符串， 而PHP5.3新增的 nowdoc结构是类似于多行且保持格式的单引号字符串。<br>nowdoc结构也用和heredoc结构一样的标记 &lt;&lt;&lt;，但是跟在后面的标识符要用单引号括起来，即 &lt;&lt;&lt;’EOT’。<br>在PHP5.3中heredoc结构也支持使用双引号，如 &lt;&lt;&lt;”EOT”。这样就和heredoc结构在语法一达到了统一。</p>
+</blockquote>
+<h3 id="跑到了类外面的类常量"><a href="#跑到了类外面的类常量" class="headerlink" title="跑到了类外面的类常量"></a>跑到了类外面的类常量</h3><blockquote>
+<p>在PHP5.3.0以后，可以使用 const 关键字在类定义之外定义常量</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> CONSTANT = <span class="string">'Hello World'</span>;</span><br><span class="line"><span class="keyword">echo</span> CONSTANT; <span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>和用define定义常量不同的是,使用const关键字定义常量必须处于最顶端的作用区域，因为用此方法是在编译时定义的。<br>这就意味着不能在函数/循环体内/if语句之内用const来定义常量。</p>
+</blockquote>
+<h3 id="三目运算符"><a href="#三目运算符" class="headerlink" title="三目运算符"></a>三目运算符</h3><blockquote>
+<p>在PHP5.3.0之前,如果想直接判断表达式1的结果为true时就返回结果时,得在表达式2中重写一遍表达式1,现在可以省掉这一步了.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$str = <span class="string">'   hello '</span>;</span><br><span class="line"><span class="keyword">echo</span> trim($str) ? trim($str) : <span class="string">'default'</span>; <span class="comment">// hello</span></span><br><span class="line"><span class="keyword">echo</span> trim($str) ?  : <span class="string">'default'</span>; <span class="comment">// hello  PHP &gt;= 5.3.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="PHP5-4-0中的Trait"><a href="#PHP5-4-0中的Trait" class="headerlink" title="PHP5.4.0中的Trait"></a>PHP5.4.0中的Trait</h3><blockquote>
+<p>trait是PHP实现代码复用的又一机制,可很好的解决PHP的单一继承的局限性问题,又可减少添加了多继承的复杂度.可灵活组合trait进行组件式开发</p>
+</blockquote>
+<ul>
+<li>在类中引入trait后,其优先级关系为 基类方法 &lt; trait引入的方法 &lt; 本类中定义的方法, 优先级高的覆盖优先级低的</li>
+<li>可同时引入多个trait, 如果有方法名冲突,可使用insteadof操作符来明确指定使用冲突方法中的哪一个</li>
+<li>trait也可引入其它的trait来组合使用</li>
+<li>trait可定义抽象方法/静态方法</li>
+<li>trait还可以定义属性,这时类中就不可再定义同名的属性</li>
+</ul>
+<h3 id="数组定义有了新花样"><a href="#数组定义有了新花样" class="headerlink" title="数组定义有了新花样"></a>数组定义有了新花样</h3><blockquote>
+<p>之前数组定义都是使用 array(), 到了5.4提供了新的定义语法:使用[]操作符</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]; <span class="comment">//相单于 $a = array(1, 2, 3, 4);</span></span><br><span class="line">$a = [<span class="string">'one'</span> =&gt; <span class="number">1</span>, <span class="string">'two'</span> =&gt; <span class="number">2</span>, <span class="string">'three'</span> =&gt; <span class="number">3</span>, <span class="string">'four'</span> =&gt; <span class="number">4</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="对于函数中返回数组的成员直接访问"><a href="#对于函数中返回数组的成员直接访问" class="headerlink" title="对于函数中返回数组的成员直接访问"></a>对于函数中返回数组的成员直接访问</h3><blockquote>
+<p>之前对于函数中返回的数组,要先赋值给变量,然后再通过下标方式来方式,至少要2步;现在可以一步到位了. </p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="number">50</span>, <span class="number">100</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> a()[<span class="number">1</span>]; <span class="comment">//100</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实例化一个类时，也不需要必须赋值给一个变量再使用，可以直接调用</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">new</span> ExampleModel)-&gt;print();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>同时对于方法的调用也支持表达式计算语法，如上面关于”后期静态绑定”的例子，可以改成这样：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$name = <span class="string">'getMerchantId'</span>; <span class="comment">// 也可以是一个表达式计算结果</span></span><br><span class="line">$ret = Google::&#123;$name&#125;();</span><br><span class="line">$ret = Baidu::&#123;$name&#125;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="二进制直接量支持"><a href="#二进制直接量支持" class="headerlink" title="二进制直接量支持"></a>二进制直接量支持</h3><blockquote>
+<p>PHP5.4中新增二进制直接量，例如：0b001001101</p>
+</blockquote>
+<h3 id="引入生成器"><a href="#引入生成器" class="headerlink" title="引入生成器"></a>引入生成器</h3><blockquote>
+<p>我觉得在PHP5.5中，最值得期待的新特性就是生成器。PHP通过yield关键字添加了对生成器的支持。 生成器提供了一种简单的方法来实现简单的迭代器，而省去实现Iterator接口的开销或复杂性。</p>
+</blockquote>
+<h3 id="新增-finally-关键字"><a href="#新增-finally-关键字" class="headerlink" title="新增 finally 关键字"></a>新增 finally 关键字</h3><blockquote>
+<p>PHP在5.5版本中加入了finally关键字, 这样可以做到不管try语句里有没有抛出异常或错误,在finally里的语句总是会执行.</p>
+</blockquote>
+<h3 id="foreach支持list-函数"><a href="#foreach支持list-函数" class="headerlink" title="foreach支持list()函数"></a>foreach支持list()函数</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$arr = [</span><br><span class="line">    [<span class="number">15</span>, <span class="string">'liming'</span>],</span><br><span class="line">    [<span class="number">16</span>, <span class="string">'huahua'</span>],</span><br><span class="line">];</span><br><span class="line"><span class="keyword">foreach</span> ($arr <span class="keyword">as</span> <span class="keyword">list</span>($id, $name)) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'id:'</span> . $id .<span class="string">','</span>. <span class="string">'name:'</span> . $name . PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//id:15,name:liming</span></span><br><span class="line"><span class="comment">//id:16,name:huahua</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="empty-函数升级"><a href="#empty-函数升级" class="headerlink" title="empty()函数升级"></a>empty()函数升级</h3><blockquote>
+<p>现在empty()函数支持任意表达式作为参数调用,而之前仅仅支持传入一个变量</p>
+</blockquote>
+<h3 id="数组和字符串支持直接下标引用"><a href="#数组和字符串支持直接下标引用" class="headerlink" title="数组和字符串支持直接下标引用"></a>数组和字符串支持直接下标引用</h3><blockquote>
+<p>数组和字符串都直接访问下标引用,无需先赋值到一个变量再引用</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> [<span class="number">50</span>,<span class="number">100</span>,<span class="number">1000</span>][<span class="number">2</span>]; <span class="comment">// 1000</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'PHP'</span>[<span class="number">1</span>];         <span class="comment">// H</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="新的密码哈希API"><a href="#新的密码哈希API" class="headerlink" title="新的密码哈希API"></a>新的密码哈希API</h3><blockquote>
+<p>这套密码哈希API是专门用于加密密码和校验密码的解决方案. 从5.5之后, 就不应该再使用md5(password) 方式来加密密码,这里提供了更好的方案.</p>
+</blockquote>
+<p><a href="http://php.net/manual/zh/book.password.php" target="_blank" rel="noopener">新的密码哈希API</a></p>
+<h3 id="类常量-属性-函数参数默认值上的变化"><a href="#类常量-属性-函数参数默认值上的变化" class="headerlink" title="类常量/属性/函数参数默认值上的变化"></a>类常量/属性/函数参数默认值上的变化</h3><blockquote>
+<p>在PHP 5.6之前的版本中,必须使用静态值(数值/字符串字面量)来定义类常量、声明属性和指定函数参数默认值, 在新版本中,一切变得更加灵活起来了;现在除了使用这些静态值外,还可以使用表达式(数学运算表达式/字符串连接表达式/类常量引用/数组)来定义.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ONE = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> TWO = ONE * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> ARR = [<span class="string">'a'</span>, <span class="string">'b'</span>];</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> THREE = TWO + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> ONE_THIRD = ONE / <span class="keyword">self</span>::THREE;</span><br><span class="line">    <span class="keyword">const</span> SENTENCE = <span class="string">'The value of THREE is '</span> . <span class="keyword">self</span>::THREE;</span><br><span class="line">    <span class="keyword">const</span> SEX = [<span class="string">'male'</span>, <span class="string">'female'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> $len = <span class="keyword">self</span>::THREE ** <span class="number">2</span>; <span class="comment">//幂运算</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">func1</span><span class="params">($a = ONE + self::THREE)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">func2</span><span class="params">($sex = self::SEX)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $sex;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$c = <span class="keyword">new</span> C;</span><br><span class="line"><span class="keyword">echo</span> $c-&gt;func1(). PHP_EOL; <span class="comment">// 4</span></span><br><span class="line"><span class="keyword">print</span>\_r($c-&gt;func2()). PHP_EOL; <span class="comment">//Array([0] =&gt; male  [1] =&gt; female)</span></span><br><span class="line"><span class="keyword">echo</span> C::SENTENCE . PHP_EOL; <span class="comment">// The value of THREE is 3</span></span><br><span class="line"><span class="keyword">echo</span> C::SEX[<span class="number">1</span>] . PHP_EOL; <span class="comment">//female</span></span><br><span class="line"><span class="keyword">echo</span> $c-&gt;len . PHP_EOL; <span class="comment">// 9</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-…-运算符定义可变长参数的函数"><a href="#使用-…-运算符定义可变长参数的函数" class="headerlink" title="使用 … 运算符定义可变长参数的函数"></a>使用 … 运算符定义可变长参数的函数</h3><blockquote>
+<p>在函数定义处的形参列表里使用 …运算符后接变量名的方式可以让此形参变量接收到除了前面已经被其它形参变量接收到的所有的参数</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">($req, $opt = null, ...$params)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// $params 是一个包含了剩余参数的数组</span></span><br><span class="line">    printf(<span class="string">'$req: %d; $opt: %d; number of params: %d'</span>.<span class="string">"\n"</span>,</span><br><span class="line">           $req, $opt, count($params));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f(<span class="number">1</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//上例输出:</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">0</span>; number of params: <span class="number">0</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">0</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">1</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">2</span></span><br><span class="line">$req: <span class="number">1</span>; $opt: <span class="number">2</span>; number of params: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-…-运算符进行参数展开"><a href="#使用-…-运算符进行参数展开" class="headerlink" title="使用 … 运算符进行参数展开"></a>使用 … 运算符进行参数展开</h3><blockquote>
+<p>在调用函数的时候，使用 … 运算符， 将数组和可遍历对象展开为函数参数。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">($a, $b, $c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $a + $b + $c;</span><br><span class="line">&#125;</span><br><span class="line">$operators = [<span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">echo</span> add(<span class="number">1</span>, ...$operators) . PHP_EOL; <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//系统函数也可以</span></span><br><span class="line">$arr = [<span class="string">'helloworld'</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">echo</span> substr(...$arr); <span class="comment">// low</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在PhpRedis扩展里,sAdd()方法使用这种方式调用就更方便</span></span><br><span class="line">$redis-&gt;sAdd(<span class="string">'key1'</span> , <span class="string">'member2'</span>, <span class="string">'member3'</span>); <span class="comment">//普通调用</span></span><br><span class="line"></span><br><span class="line">$memberArr = [<span class="string">'member2'</span>, <span class="string">'member3'</span>];<span class="comment">// 参数展开调用</span></span><br><span class="line">$redis-&gt;sAdd(<span class="string">'key1'</span>, ...$memberArr);</span><br></pre></td></tr></table></figure>
+
+<h3 id="幂运算表达式"><a href="#幂运算表达式" class="headerlink" title="幂运算表达式"></a>幂运算表达式</h3><blockquote>
+<p>加入右连接运算符 ** 来进行幂运算。同时也支持简写的 **= 运算符。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = <span class="number">2</span>;</span><br><span class="line">$a **= <span class="number">3</span>; <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="命名空间特性中use运算符功能增强"><a href="#命名空间特性中use运算符功能增强" class="headerlink" title="命名空间特性中use运算符功能增强"></a>命名空间特性中use运算符功能增强</h3><blockquote>
+<p>在之前的版本中只支持导入外部的类,在PHP5.6中use支持导入外部的函数和常量。对应的结构为 use function 和 use const。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">Name</span>\<span class="title">Space</span>\<span class="title">CONSTANT</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">Name</span>\<span class="title">Space</span>\<span class="title">func</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> CONSTANT;</span><br><span class="line">func();</span><br></pre></td></tr></table></figure>
+
+<h3 id="加入-debugInfo-魔术方法"><a href="#加入-debugInfo-魔术方法" class="headerlink" title="加入__debugInfo()魔术方法"></a>加入__debugInfo()魔术方法</h3><blockquote>
+<p>当使用var_dump()输出对象的时候，可以通过编写__debugInfo()函数来控制要输出的属性和值。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>官方文档拾遗(函数篇)</title>
+    <url>/2018/php-official-documentation-is-added-function/</url>
+    <content><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>上一篇了总结了PHP官方文档的语法基础部分，这一篇再补充一下PHP的内置函数部分，还没有看完，以后再加吧。</p>
+<a id="more"></a>
+
+<h3 id="trim-函数的工作方式"><a href="#trim-函数的工作方式" class="headerlink" title="trim()函数的工作方式"></a>trim()函数的工作方式</h3><blockquote>
+<p>trim()函数默认可以过滤空白字符.如果指定第二个参数,则过滤指定的字符.这里是以字符为单位而不是以字符串为单位过滤.如下例:</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$hello  = <span class="string">'Hello World'</span>;</span><br><span class="line">$trimmed = trim($hello, <span class="string">'Hdle'</span>);</span><br><span class="line">var_dump($trimmed); <span class="comment">// o Wor</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第二个参数也可以是使用”..”来表示一个字符范围,如”a..z”;见下例：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> trim(<span class="string">'abcdef1234'</span>,<span class="string">'a..d'</span>); <span class="comment">// ef1234</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成请求串和解析请求串"><a href="#生成请求串和解析请求串" class="headerlink" title="生成请求串和解析请求串"></a>生成请求串和解析请求串</h3><blockquote>
+<p>http_build_query()函数可将一个关联数组生成为一个URL请求串的形式,而parse_str()函数正好相反,把请求串构建成数组, 见下例:</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$param = <span class="keyword">array</span>(<span class="string">'foo'</span>=&gt;<span class="string">'bar'</span>,</span><br><span class="line">              <span class="string">'baz'</span>=&gt;<span class="string">'boom'</span>,</span><br><span class="line">              <span class="string">'cow'</span>=&gt;<span class="string">'milk'</span>);</span><br><span class="line">$query = http_build_query($param);</span><br><span class="line">print_r($query); <span class="comment">// foo=bar&amp;baz=boom&amp;cow=milk</span></span><br><span class="line"></span><br><span class="line">parse_str($query, $output);</span><br><span class="line">print_r($output);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Array(</span></span><br><span class="line"><span class="comment">    [foo] =&gt; bar</span></span><br><span class="line"><span class="comment">    [baz] =&gt; boom</span></span><br><span class="line"><span class="comment">    [cow] =&gt; milk</span></span><br><span class="line"><span class="comment">)</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="asort-函数对二维数组的排序"><a href="#asort-函数对二维数组的排序" class="headerlink" title="asort()函数对二维数组的排序"></a>asort()函数对二维数组的排序</h3><blockquote>
+<p>asort()函数对数组进行排序并保持索引关系, 也可以对二维数组进行排序,并且是以第一个元素的值为准. 如果想对二维数组的某个二维的值排序,将其放在第一位即可.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$people = <span class="keyword">array</span>( </span><br><span class="line">    <span class="keyword">array</span>(<span class="string">"name"</span>=&gt;<span class="string">"Bob"</span>, <span class="string">"age"</span>=&gt;<span class="number">18</span>), </span><br><span class="line">    <span class="keyword">array</span>(<span class="string">"name"</span>=&gt;<span class="string">"Greg"</span>,<span class="string">"age"</span>=&gt;<span class="number">12</span>), </span><br><span class="line">    <span class="keyword">array</span>(<span class="string">"name"</span>=&gt;<span class="string">"Andy"</span>,<span class="string">"age"</span>=&gt;<span class="number">15</span>),</span><br><span class="line">); </span><br><span class="line">asort($people);</span><br><span class="line">print_r($people);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Array</span></span><br><span class="line"><span class="comment">(</span></span><br><span class="line"><span class="comment">    [2] =&gt; Array</span></span><br><span class="line"><span class="comment">        (</span></span><br><span class="line"><span class="comment">            [name] =&gt; Andy</span></span><br><span class="line"><span class="comment">            [age] =&gt; 15</span></span><br><span class="line"><span class="comment">        )</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    [0] =&gt; Array</span></span><br><span class="line"><span class="comment">        (</span></span><br><span class="line"><span class="comment">            [name] =&gt; Bob</span></span><br><span class="line"><span class="comment">            [age] =&gt; 18</span></span><br><span class="line"><span class="comment">        )</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    [1] =&gt; Array</span></span><br><span class="line"><span class="comment">        (</span></span><br><span class="line"><span class="comment">            [name] =&gt; Greg</span></span><br><span class="line"><span class="comment">            [age] =&gt; 12</span></span><br><span class="line"><span class="comment">        )</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">$people = <span class="keyword">array</span>( </span><br><span class="line">    <span class="keyword">array</span>(<span class="string">"age"</span>=&gt;<span class="number">18</span>,<span class="string">"name"</span>=&gt;<span class="string">"Bob"</span>), </span><br><span class="line">    <span class="keyword">array</span>(<span class="string">"age"</span>=&gt;<span class="number">12</span>,<span class="string">"name"</span>=&gt;<span class="string">"Greg"</span>), </span><br><span class="line">    <span class="keyword">array</span>(<span class="string">"age"</span>=&gt;<span class="number">15</span>,<span class="string">"name"</span>=&gt;<span class="string">"Andy"</span>),</span><br><span class="line">); </span><br><span class="line">asort($people);</span><br><span class="line">print_r($people);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Array</span></span><br><span class="line"><span class="comment">(</span></span><br><span class="line"><span class="comment">    [1] =&gt; Array</span></span><br><span class="line"><span class="comment">        (</span></span><br><span class="line"><span class="comment">            [age] =&gt; 12</span></span><br><span class="line"><span class="comment">            [name] =&gt; Greg</span></span><br><span class="line"><span class="comment">        )</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    [2] =&gt; Array</span></span><br><span class="line"><span class="comment">        (</span></span><br><span class="line"><span class="comment">            [age] =&gt; 15</span></span><br><span class="line"><span class="comment">            [name] =&gt; Andy</span></span><br><span class="line"><span class="comment">        )</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    [0] =&gt; Array</span></span><br><span class="line"><span class="comment">        (</span></span><br><span class="line"><span class="comment">            [age] =&gt; 18</span></span><br><span class="line"><span class="comment">            [name] =&gt; Bob</span></span><br><span class="line"><span class="comment">        )</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">)</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可尝试将第二个asort改为arsort,这时将以age倒序排序. 同理,像sort()/rsort()函数也有此特性</p>
+</blockquote>
+<blockquote>
+<p>除了上面的方法外，PHP还有内部函数支持,以下函数就是通过内部函数实现，效果和上面一样：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">multiSort</span><span class="params">($arr, $field, $sort = SORT_DESC)</span></span>&#123;</span><br><span class="line">    $benchArr = array_column($arr, $field);</span><br><span class="line">    array_multisort($benchArr, $sort, $arr);</span><br><span class="line">    <span class="keyword">return</span> $arr;</span><br><span class="line">&#125;</span><br><span class="line">$sortedPeople = multiSort($people, <span class="string">'age'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="getimagesize函数使用注意项"><a href="#getimagesize函数使用注意项" class="headerlink" title="getimagesize函数使用注意项"></a>getimagesize函数使用注意项</h3><blockquote>
+<p><a href="http://php.net/manual/zh/function.getimagesize.php" target="_blank" rel="noopener">getimagesize</a>函数如果不能访问指定的图像或者其不是有效的图像，<br>getimagesize() 将返回 FALSE 并产生一条 E_WARNING 级的错误。所以在使用时要么对其进行 “存在性判断”  等合法性判断</p>
+</blockquote>
+<h3 id="isset-函数"><a href="#isset-函数" class="headerlink" title="isset()函数"></a>isset()函数</h3><blockquote>
+<p>用于检测变量是否被赋值，并且该值不是NULL。具体情况如下：</p>
+</blockquote>
+<ul>
+<li>如果变量之前被赋值，之后又被unset()之后，isset()将返回false;</li>
+<li>若测试一个被设置成NULL的变量，将返回false;</li>
+<li>该函数支持多个变量批量检测，只有在全部参数都返回TRUE时才会为TRUE, 检测过程从左至右，中途遇到没有设置的变量时就会立即停止。</li>
+<li>该函数还可用于检测字符串的下标位置是否有值，当然也可检测数组中元素。如果想知道数组的某个KEY是否存在,建议使用array_key_exists()函数，因为它是直接判断KEY,而不管值。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$str = <span class="string">'abc'</span>;</span><br><span class="line">var_dump(<span class="keyword">isset</span>($str&#123;<span class="number">1</span>&#125;)); <span class="comment">// bool(true)</span></span><br><span class="line">var_dump(<span class="keyword">isset</span>($str&#123;<span class="number">3</span>&#125;)); <span class="comment">// bool(false)</span></span><br><span class="line"></span><br><span class="line">$arr = [<span class="string">'name'</span> =&gt; <span class="string">'Bob'</span>, <span class="string">'age'</span> =&gt; <span class="number">20</span>];</span><br><span class="line">var_dump(<span class="keyword">isset</span>($arr[<span class="string">'age'</span>])); <span class="comment">// bool(true)</span></span><br><span class="line">var_dump(<span class="keyword">isset</span>($arr[<span class="string">'weight'</span>])); <span class="comment">// bool(false)</span></span><br><span class="line"></span><br><span class="line">$arr = <span class="keyword">array</span>(<span class="string">'first'</span> =&gt; <span class="keyword">null</span>, <span class="string">'second'</span> =&gt; <span class="number">4</span>);</span><br><span class="line"><span class="keyword">isset</span>($arr[<span class="string">'first'</span>]); <span class="comment">// returns false</span></span><br><span class="line">array_key_exists(<span class="string">'first'</span>, $arr); <span class="comment">// returns true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="str-split-函数"><a href="#str-split-函数" class="headerlink" title="str_split()函数"></a>str_split()函数</h3><blockquote>
+<p>用于将字符串转换为数组,在处理多字节字符如中文时，str_split()还是会按字节数转换，而非字符数；这就有问题。在手册中看到一个解决方案：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$arr = preg_split(<span class="string">'/(?&lt;!^)(?!$)/u'</span>, <span class="string">'中国'</span>); <span class="comment">// $arr输出为 ['中', '国']</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>官方文档拾遗(基础篇)</title>
+    <url>/2018/php-official-documentation-is-added-basic/</url>
+    <content><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近又看了一遍PHP官方文档。说句实话，PHP官方文档的组织还算不错的，条理清晰，链接合理；尤其页面下方的开发者自己撰写的评论，更是文档的精华。所以我觉得多看几遍文档并且勤于动手实践，就可以超过大多数人了。现将我的收获总结如下，欢迎品尝。</p>
+<a id="more"></a>
+
+<h3 id="类型转换问题"><a href="#类型转换问题" class="headerlink" title="类型转换问题"></a>类型转换问题</h3><p><code>var_dump(0 == &#39;all&#39;); // bool(true)</code></p>
+<blockquote>
+<p>在此处要小心, all和0比较时, 字符串all被转化为数值类型0了。 </p>
+</blockquote>
+<p>在switch语句中,尤其要注意此问题:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="string">"a"</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"0"</span>; <span class="comment">// 输出0</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"a"</span>: </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"a"</span>; <span class="comment">// 不会执行到这里，和上例一样,a已经转化为数值类型0.</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数字连接问题"><a href="#数字连接问题" class="headerlink" title="数字连接问题"></a>数字连接问题</h3><blockquote>
+<p>用字符串连接符(.)连接2个整型数字时，可在连接符前后加空格以不至于变成小数</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="number">1</span> . <span class="number">2</span>; <span class="comment">//prints the string "12"</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1.2</span>;   <span class="comment">//prints the number 1.2</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span>+<span class="number">2</span>;   <span class="comment">//prints the number 3</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="函数名及变量名大小写问题"><a href="#函数名及变量名大小写问题" class="headerlink" title="函数名及变量名大小写问题"></a>函数名及变量名大小写问题</h3><blockquote>
+<p>PHP函数调用是不区别大小写的，而变量名区别大小写。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">aA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'lamp'</span>;</span><br><span class="line">&#125;</span><br><span class="line">AA(); <span class="comment">//lamp</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">'hello'</span>;</span><br><span class="line"><span class="keyword">echo</span> $A; <span class="comment">//Notice: Undefined variable: A</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="echo-的返回值问题"><a href="#echo-的返回值问题" class="headerlink" title="echo 的返回值问题"></a>echo 的返回值问题</h3><blockquote>
+<p>echo 不是一个函数,所以没有返回值;因而不能用在需要有返回值的表达式中</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$value = <span class="string">'lamp'</span>;</span><br><span class="line"><span class="keyword">isset</span>($value) <span class="keyword">AND</span> <span class="keyword">echo</span> $value; <span class="comment">// PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果真得想在这样的表达式中输出变量值,可以用print函数代替, 因为print函数问题返回1</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">isset</span>($value) <span class="keyword">AND</span> <span class="keyword">print</span>($value); <span class="comment">// lamp</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="从函数里返回引用问题"><a href="#从函数里返回引用问题" class="headerlink" title="从函数里返回引用问题"></a>从函数里返回引用问题</h3><blockquote>
+<p>从函数返回一个引用，必须在函数声明和指派返回值给一个变量时都使用引用运算符 &amp;; 如果只在一处加上&amp;,则并不会返回引用</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">returns_reference</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $someref;</span><br><span class="line">&#125;</span><br><span class="line">$newref = &amp; returns_reference();</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组中的-运算符"><a href="#数组中的-运算符" class="headerlink" title="数组中的+运算符"></a>数组中的+运算符</h3><blockquote>
+<p> <em>+</em> 运算符把右边的数组元素附加到左边的数组后面. 两个数组中都有的键名，则只用左边数组中的，右边的被忽略。同理，对于索引数组也是如此，同一索引处的值会使用前面数组的值。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = <span class="keyword">array</span>(<span class="string">"a"</span> =&gt; <span class="string">"apple"</span>, <span class="string">"b"</span> =&gt; <span class="string">"banana"</span>);</span><br><span class="line">$b = <span class="keyword">array</span>(<span class="string">"a"</span> =&gt; <span class="string">"pear"</span>, <span class="string">"b"</span> =&gt; <span class="string">"strawberry"</span>, <span class="string">"c"</span> =&gt; <span class="string">"cherry"</span>);</span><br><span class="line">print_r($a + $b);</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">    [a] =&gt; apple</span><br><span class="line">    [b] =&gt; banana</span><br><span class="line">    [c] =&gt; cherry</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">array</span>(<span class="string">'one'</span>,<span class="string">'two'</span>);</span><br><span class="line">$b = <span class="keyword">array</span>(<span class="string">'three'</span>,<span class="string">'four'</span>,<span class="string">'five'</span>);</span><br><span class="line">print_r ($a + $b);</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">    [<span class="number">0</span>] =&gt; one</span><br><span class="line">    [<span class="number">1</span>] =&gt; two</span><br><span class="line">    [<span class="number">2</span>] =&gt; five</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="递增／递减-–-运算符"><a href="#递增／递减-–-运算符" class="headerlink" title="递增／递减(++/–)运算符"></a>递增／递减(++/–)运算符</h3><blockquote>
+<p>递增／递减运算符不但能递增／递减整型数字，还能递增／递减字符等</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$s = <span class="string">'W'</span>;</span><br><span class="line"><span class="keyword">for</span> ($n=<span class="number">0</span>; $n&lt;<span class="number">6</span>; $n++) &#123;</span><br><span class="line">    <span class="keyword">echo</span> ++$s . PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出为:</span></span><br><span class="line">X</span><br><span class="line">Y</span><br><span class="line">Z</span><br><span class="line">AA</span><br><span class="line">AB</span><br><span class="line">AC</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>是不是发现可以很方便的生成出excel的横向坐标轴?</p>
+</blockquote>
+<h3 id="运算符的结合性"><a href="#运算符的结合性" class="headerlink" title="运算符的结合性"></a>运算符的结合性</h3><blockquote>
+<p>如果运算符优先级相同，那运算符的结合方向决定了该如何运算。例如，”-“是左联(从左往右看)的，那么 1 - 2 - 3 就等同于 (1 - 2) - 3 并且结果是 -4. 另外一方面，”=”是右联(从右往左看)的，所以 $a = $b = $c 等同于 $a = ($b = $c)。<br><em>观察可知只有单目运算符和(组合)赋值运算符为右联的。</em></p>
+</blockquote>
+<h3 id="未定义常量使用问题"><a href="#未定义常量使用问题" class="headerlink" title="未定义常量使用问题"></a>未定义常量使用问题</h3><blockquote>
+<p>未定义某常量就直接使用该常量时会被评估为true.所以将常量放在if判断里最好要明确判断其值</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// DEBUG并没有在上下文中被定义为常量</span></span><br><span class="line"><span class="keyword">if</span> (DEBUG) &#123;</span><br><span class="line">   <span class="keyword">echo</span> <span class="string">'lamp'</span>; <span class="comment">//DEBUG未定义，会报Notice: Use of undefined constant DEBUG. 但是依然能输出lamp.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (DEBUG == <span class="keyword">true</span>) &#123;</span><br><span class="line">   <span class="keyword">echo</span> <span class="string">'lamp'</span>;<span class="comment">//对常量值做判断就不会在没有定义时执行if内部的语句。仅仅是报notice.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="更简洁的类型转换技巧"><a href="#更简洁的类型转换技巧" class="headerlink" title="更简洁的类型转换技巧"></a>更简洁的类型转换技巧</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$string  = <span class="string">'12345.678'</span>;</span><br><span class="line">$float   = +$string; </span><br><span class="line">$integer = <span class="number">0</span>|$string;</span><br><span class="line">$boolean = !!$string;</span><br><span class="line"></span><br><span class="line">var_dump($float);   <span class="comment">//float(12345.678)</span></span><br><span class="line">var_dump($integer); <span class="comment">//int(12345)</span></span><br><span class="line">var_dump($boolean); <span class="comment">//bool(true)</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="字符串中的字符访问"><a href="#字符串中的字符访问" class="headerlink" title="字符串中的字符访问"></a>字符串中的字符访问</h3><blockquote>
+<p>字符串也可以像数组那样使用中括号的索引下标方式访问，也可是用大括号的索引下标方式访问</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a    = <span class="string">'car'</span>; <span class="comment">// $a is a string</span></span><br><span class="line">$a[<span class="number">0</span>] = <span class="string">'b'</span>;   <span class="comment">// $a is still a string</span></span><br><span class="line">$a&#123;<span class="number">1</span>&#125; = <span class="string">'o'</span>;</span><br><span class="line"><span class="keyword">echo</span> $a;       <span class="comment">// bor</span></span><br><span class="line">$a[<span class="string">'data'</span>] = <span class="string">'a'</span>; <span class="comment">//报错 Warning: Illegal string offset 'data'</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组的键类型及转换"><a href="#数组的键类型及转换" class="headerlink" title="数组的键类型及转换"></a>数组的键类型及转换</h3><blockquote>
+<p>数组的key 可以是 integer 或者 string。value 可以是任意类型。</p>
+</blockquote>
+<p>此外 key 会有如下的强制转换：</p>
+<ul>
+<li>包含有合法整型值的字符串会被转换为整型。例如键名 “8” 实际会被储存为 8。但是 “08” 则不会强制转换，因为其不是一个合法的十进制数值。</li>
+<li>浮点数也会被转换为整型，意味着其小数部分会被舍去。例如键名 8.7 实际会被储存为 8。</li>
+<li>布尔值也会被转换成整型。即键名 true 实际会被储存为 1 而键名 false 会被储存为 0。</li>
+<li>Null 会被转换为空字符串，即键名 null 实际会被储存为 “”。</li>
+<li>数组和对象不能被用为键名。坚持这么做会导致警告：Illegal offset type。</li>
+<li>如果在数组定义中多个单元都使用了同一个键名，则只使用了最后一个，之前的都被覆盖了。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$array = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">1</span>    =&gt; <span class="string">"a"</span>,</span><br><span class="line">    <span class="string">"1"</span>  =&gt; <span class="string">"b"</span>,</span><br><span class="line">    <span class="number">1.5</span>  =&gt; <span class="string">"c"</span>,</span><br><span class="line">    <span class="keyword">true</span> =&gt; <span class="string">"d"</span>,</span><br><span class="line">);</span><br><span class="line">var_dump($array); <span class="comment">// array(1 =&gt; "d")</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组的下标访问"><a href="#数组的下标访问" class="headerlink" title="数组的下标访问"></a>数组的下标访问</h3><blockquote>
+<p>方括号和花括号都可以用来访问数组单元（例如 $array[42] 和 $array{42} 效果相同）。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$array = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">"foo"</span> =&gt; <span class="string">"bar"</span>,</span><br><span class="line">    <span class="number">42</span>    =&gt; <span class="number">24</span>,</span><br><span class="line">);</span><br><span class="line">var_dump($array[<span class="number">42</span>]); <span class="comment">// int(24)</span></span><br><span class="line">var_dump($array&#123;<span class="number">42</span>&#125;); <span class="comment">// int(24)</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="浮点数计算的注意事项"><a href="#浮点数计算的注意事项" class="headerlink" title="浮点数计算的注意事项"></a>浮点数计算的注意事项</h3><blockquote>
+<p>php中的浮点数也是遵循IEEE754规范定义(应该是C遵循)的那种存储方式,所以对于浮点数计算有精度问题, 解决方案就像下例提到的<br>使用BC Math 扩展或GMP扩展</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> intval(<span class="number">19.31</span> * <span class="number">100</span>); <span class="comment">//1930</span></span><br><span class="line"><span class="keyword">echo</span> bcmul(<span class="number">19.31</span>, <span class="number">100</span>); <span class="comment">//1931</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="unset函数都干了什么"><a href="#unset函数都干了什么" class="headerlink" title="unset函数都干了什么"></a>unset函数都干了什么</h3><blockquote>
+<p>由下例可知,unset函数斩断变量名到值的联系(引用), 因此当$a被unset掉后,$a变量名与5这个值就失去了联系,但是$b和5这个<br>值的联系还在,所以$b可以正常输出. 当$a被赋值为NULL后,实际上是把之前存储5这块内存设置为了NULL,所以这回$b也被设置成了NULL</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = <span class="number">5</span>;</span><br><span class="line">$b = &amp; $a;</span><br><span class="line"><span class="keyword">unset</span>($a);</span><br><span class="line"><span class="keyword">print</span> <span class="string">"b $b"</span>; <span class="comment">// b 5</span></span><br><span class="line"></span><br><span class="line">$a = <span class="number">5</span>;</span><br><span class="line">$b = &amp; $a;</span><br><span class="line">$a = <span class="keyword">NULL</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">"b $b"</span>; <span class="comment">//b </span></span><br><span class="line"></span><br><span class="line">var_dump($b); <span class="comment">//NULL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="break关键字和continue关键字后面的数字"><a href="#break关键字和continue关键字后面的数字" class="headerlink" title="break关键字和continue关键字后面的数字"></a>break关键字和continue关键字后面的数字</h3><p>break关键字用于结束当前for，foreach，while，do-while 或者switch结构的执行，另外break还可以接受一个可选的数字参数来决定跳出几重循环。这对复杂的循环嵌套非常有用；同理，continue关键字也支持</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (++$i) &#123;</span><br><span class="line">    <span class="keyword">switch</span> ($i) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"At 5"</span>;</span><br><span class="line">        <span class="keyword">break</span> <span class="number">1</span>; <span class="comment">//只退出 switch</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"At 10"</span>;</span><br><span class="line">        <span class="keyword">break</span> <span class="number">2</span>; <span class="comment">//退出 switch 和 while 循环</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+</search>

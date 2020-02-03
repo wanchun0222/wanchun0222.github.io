@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+   
+  <meta name="keywords" content="LNMP博客" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    PHP新特性(php7.0-php7.2) |  格物致知
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-php-new-features-2" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PHP新特性(php7.0-php7.2)
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/php-new-features-2/" class="article-date">
+  <time datetime="2018-05-14T07:16:12.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
+<p>PHP在7发布后，仍有大量的新特性被加入出来。我们再来了解一下。我们可以在PHP官方文档的<a href="http://php.net/manual/zh/appendices.php" target="_blank" rel="noopener">附录</a>查阅相关更详细<br>内容。如果你想动手运行及演练各版本的示例代码,可以使用这个<a href="https://3v4l.org/" target="_blank" rel="noopener">网站</a>, 它可以向你展示PHP各版本下的运行结果。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="标量类型声明及返回值类型声明"><a href="#标量类型声明及返回值类型声明" class="headerlink" title="标量类型声明及返回值类型声明"></a>标量类型声明及返回值类型声明</h3><blockquote>
+<p>在PHP7中,函数和方法上都可以使用标量类型来对参数及返回值进行类型声明了.如果传入的参数类型及返回值类型<br>与声明的类型不匹配，将会报错。这里的类型匹配分两种情况，就是说标量类型声明有两种模式: 强制(默认)和严格模式。<br>在强制模式下,如整数、浮点数、整数字符串都可与声明的整型(int)匹配。而通过定义在文件首行的<code>declare(strict_types=1);</code>声明方式<br>将模式转为严格模式后，情况就完全变了。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sumOfInts</span><span class="params">(int ...$ints)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> array_sum($ints);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(sumOfInts(<span class="number">2</span>, <span class="string">'3'</span>, <span class="number">4.1</span>)); <span class="comment">// int(9)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>转化为严格模式：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span>(strict_types=<span class="number">1</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sumOfInts</span><span class="params">(int ...$ints)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> array_sum($ints);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(sumOfInts(<span class="number">2</span>, <span class="string">'3'</span>, <span class="number">4.1</span>)); <span class="comment">// Fatal error: Uncaught TypeError: Argument 2 passed to sumOfInts() must be of the type integer, string given</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="null合并运算符"><a href="#null合并运算符" class="headerlink" title="null合并运算符"></a>null合并运算符</h3><blockquote>
+<p>我们经常在一条语句中同时使用三目运算符和isset()的情况：如先判断某变量有没有赋值，如果没有就使用默认值。PHP7中<br>专门为此需求添加了一个语法糖。我们暂且称为null合并运算符(??)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此两行代码完全等价</span></span><br><span class="line"><span class="comment">//第一行代码表示把双问号前面的变量代入到isset()函数,isset()函数返回值决定整个表达式的值是这个变量还是双问号后面的值。</span></span><br><span class="line"><span class="comment">//按isset()函数的特性, 即使双问号前面的变量为空字符串,也是返回true;除非这个值没定义或被赋值为null</span></span><br><span class="line"><span class="keyword">echo</span> $username = $_GET[<span class="string">'user'</span>] ?? <span class="string">'nobody'</span>;</span><br><span class="line"><span class="keyword">echo</span> $username = <span class="keyword">isset</span>($_GET[<span class="string">'user'</span>]) ? $_GET[<span class="string">'user'</span>] : <span class="string">'nobody'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//还可以使用这种链式判断的方式,会先判断$_GET['user'],如果没赋值就再判断$_POST['user'],如果还没赋值就使用后面的值。</span></span><br><span class="line"><span class="keyword">echo</span> $username = $_GET[<span class="string">'user'</span>] ?? $_POST[<span class="string">'user'</span>] ?? <span class="string">'nobody'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="太空船操作符（组合比较符）"><a href="#太空船操作符（组合比较符）" class="headerlink" title="太空船操作符（组合比较符）"></a>太空船操作符（组合比较符）</h3><blockquote>
+<p>太空船操作符用于比较两个表达式。当$a小于、等于或大于$b时它分别返回-1、0或1</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="number">1</span> &lt;=&gt; <span class="number">1</span>; <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span> &lt;=&gt; <span class="number">2</span>; <span class="comment">// -1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="number">2</span> &lt;=&gt; <span class="number">1</span>; <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该运算符在排序回调函数里使用得最多,一行代码即可搞定之前的2次if判断。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="keyword">array</span>(<span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">1</span>);</span><br><span class="line">usort($a, <span class="function"><span class="keyword">function</span><span class="params">($a, $b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $a &lt;=&gt; $b;</span><br><span class="line">&#125;);</span><br><span class="line">print_r($a);</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出排序后的结果</span></span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">    [<span class="number">0</span>] =&gt; <span class="number">1</span></span><br><span class="line">    [<span class="number">1</span>] =&gt; <span class="number">2</span></span><br><span class="line">    [<span class="number">2</span>] =&gt; <span class="number">3</span></span><br><span class="line">    [<span class="number">3</span>] =&gt; <span class="number">5</span></span><br><span class="line">    [<span class="number">4</span>] =&gt; <span class="number">6</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="define-定义常量数组"><a href="#define-定义常量数组" class="headerlink" title="define()定义常量数组"></a>define()定义常量数组</h3><blockquote>
+<p>现在 define()函数可以用来定义数组类型的常量了</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="string">'ANIMALS'</span>, [</span><br><span class="line">    <span class="string">'dog'</span>,</span><br><span class="line">    <span class="string">'cat'</span>,</span><br><span class="line">    <span class="string">'bird'</span></span><br><span class="line">]);</span><br><span class="line"><span class="keyword">echo</span> ANIMALS[<span class="number">1</span>]; <span class="comment">// outputs "cat"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名类"><a href="#匿名类" class="headerlink" title="匿名类"></a>匿名类</h3><blockquote>
+<p>现在支持通过new class来实例化一个匿名类，这可以用来替代一些“用后即焚”的完整类定义。<br>匿名类除了没有类名、只能使用一次外,和普通类没有任何区别。同样可以传递参数到匿名类的构造器,也可以继承其他类、实现接口、使用trait等。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PHP 7 之前的代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">log</span><span class="params">($msg)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> $msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$util-&gt;setLogger(<span class="keyword">new</span> Logger());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用了 PHP 7+ 后的代码</span></span><br><span class="line">$util-&gt;setLogger(<span class="keyword">new</span> <span class="class"><span class="keyword">class</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">log</span><span class="params">($msg)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> $msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="http://php.net/manual/zh/language.oop5.anonymous.php" target="_blank" rel="noopener">匿名类的官方说明</a></p>
+</blockquote>
+<h3 id="use关键字组合导入"><a href="#use关键字组合导入" class="headerlink" title="use关键字组合导入"></a>use关键字组合导入</h3><blockquote>
+<p>从同一命名空间导入的类、函数和常量现在可以通过单个use语句一次性导入了。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Pre PHP 7 code</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ClassA</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ClassB</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ClassC</span> <span class="title">as</span> <span class="title">C</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">fn_a</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">fn_b</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">fn_c</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ConstA</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ConstB</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\<span class="title">ConstC</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// PHP 7+ code</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">some</span>\<span class="title">namespace</span>\&#123;<span class="title">ClassA</span>, <span class="title">ClassB</span>, <span class="title">ClassC</span> <span class="title">as</span> <span class="title">C</span>&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">some</span>\<span class="title">namespace</span>\&#123;<span class="title">fn_a</span>, <span class="title">fn_b</span>, <span class="title">fn_c</span>&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">some</span>\<span class="title">namespace</span>\&#123;<span class="title">ConstA</span>, <span class="title">ConstB</span>, <span class="title">ConstC</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增整除函数intdiv"><a href="#新增整除函数intdiv" class="headerlink" title="新增整除函数intdiv()"></a>新增整除函数intdiv()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(intdiv(<span class="number">10</span>, <span class="number">3</span>));  <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="可为空（Nullable）类型"><a href="#可为空（Nullable）类型" class="headerlink" title="可为空（Nullable）类型"></a>可为空（Nullable）类型</h3><blockquote>
+<p>上面说到PHP7中在传入函数参数与返回的结果上可以指定类型,但是在实际开发中，经常遇到返回结果为空的情况，这就又与指定的返回类型不匹配了。在PHP7.1中<br>在指定类型上又添加了可空特性,就是说传入的参数或者函数返回的结果要么是给定的类型，要么是null。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">(?string $name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    var_dump($name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'tpunt'</span>); <span class="comment">// string(5) "tpunt"</span></span><br><span class="line">test(<span class="keyword">null</span>); <span class="comment">// NULL</span></span><br><span class="line">test(); <span class="comment">// Fatal error: Uncaught ArgumentCountError: Too few arguments to function test(), 0 passed</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>再看一个可空返回值的情况,因为返回值为可空,所以返回值可为string类型,也可为null.</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types=<span class="number">1</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">role</span><span class="params">(string $name)</span> :?<span class="title">string</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(in_array($name, <span class="keyword">array</span>(<span class="string">'admin'</span>, <span class="string">'manager'</span>)))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'admin'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(role(<span class="string">'admin'</span>)); <span class="comment">// string(5) "admin"</span></span><br><span class="line">var_dump(role(<span class="string">'trainee'</span>)); <span class="comment">// NULL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="void函数"><a href="#void函数" class="headerlink" title="void函数"></a>void函数</h3><blockquote>
+<p>PHP7.1中背后引入的void函数与C语言中类似.返回值声明为void类型的方法要么省去return语句，要么使用一个空return语句。对于void函数来说，null也不是一个合法的返回值。<br>下面来自官网的例子就可很好说明void函数的用途。(使用传引用的方式后就不需要返回值)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span><span class="params">(&amp;$left, &amp;$right)</span> : <span class="title">void</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ($left === $right) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $tmp = $left;</span><br><span class="line">    $left = $right;</span><br><span class="line">    $right = $tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = <span class="number">2</span>;</span><br><span class="line">var_dump(swap($a, $b)); <span class="comment">// NULL 获取一个void方法的返回值会得到null,并且不会产生任何警告</span></span><br><span class="line">var_dump($a); <span class="comment">// int(2)</span></span><br><span class="line">var_dump($b); <span class="comment">// int(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Symmetric-array-destructuring"><a href="#Symmetric-array-destructuring" class="headerlink" title="Symmetric array destructuring"></a>Symmetric array destructuring</h3><blockquote>
+<p>我们之前对二维数组循环时，拿到的都是那个完整的第二维数组,如果我们只是想处理第二维数组的某个KEY而不需要完整的第二维数组时，<br>这个语法就很有用了。我们可以拿到第二维数组的某个值给一个变量，之后在循环体中直接使用这个变量即可。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$data = [</span><br><span class="line">    <span class="number">1</span> =&gt; [<span class="string">'name'</span> =&gt; <span class="string">'Tom'</span>, <span class="string">'age'</span> =&gt; <span class="number">15</span>],</span><br><span class="line">    <span class="number">2</span> =&gt; [<span class="string">'name'</span> =&gt; <span class="string">'Fred'</span>, <span class="string">'age'</span> =&gt; <span class="number">20</span>],</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// PHP7.1+</span></span><br><span class="line"><span class="keyword">foreach</span>($data <span class="keyword">as</span> $id =&gt; [<span class="string">'age'</span> =&gt; $age] )&#123;</span><br><span class="line">    <span class="keyword">echo</span> $id .<span class="string">':'</span>. ($age+<span class="number">1</span>) . PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// PHP 7.1-</span></span><br><span class="line"><span class="keyword">foreach</span>($data <span class="keyword">as</span> $id =&gt; $row )&#123;</span><br><span class="line">    <span class="keyword">echo</span> $id .<span class="string">':'</span>. ($row[<span class="string">'age'</span>]+<span class="number">1</span>) . PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>除此以外，短数组语法[]还添加了一个本事，就是可以实现和list()函数一样的功能</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$data = [</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'Tom'</span>],</span><br><span class="line">    [<span class="number">2</span>, <span class="string">'Fred'</span>],</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// list() style</span></span><br><span class="line"><span class="keyword">list</span>($id1, $name1) = $data[<span class="number">0</span>]; <span class="comment">// 变量$id1为1,变量$name1为Tom</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [] style</span></span><br><span class="line">[$id1, $name1] = $data[<span class="number">0</span>]; <span class="comment">// 变量$id1为1,变量$name1为Tom</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="类常量可见性设置"><a href="#类常量可见性设置" class="headerlink" title="类常量可见性设置"></a>类常量可见性设置</h3><blockquote>
+<p>在PHP7.1中可以对类常量进行可见性设置</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstDemo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> PUBLIC_CONST_A = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> PUBLIC_CONST_B = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">const</span> PROTECTED_CONST = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> PRIVATE_CONST = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多异常捕获处理"><a href="#多异常捕获处理" class="headerlink" title="多异常捕获处理"></a>多异常捕获处理</h3><blockquote>
+<p>一个catch语句块现在可以通过管道字符(|)来实现多个异常的捕获。这对于需要同时处理来自不同类的不同异常时很有用。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// some code</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (FirstException | SecondException $e) &#123;</span><br><span class="line">    <span class="comment">// handle first and second exceptions</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="list-现在支持键名"><a href="#list-现在支持键名" class="headerlink" title="list()现在支持键名"></a>list()现在支持键名</h3><blockquote>
+<p>我们知道以前的版本中不支持使用关联数组对list()函数的赋值(只支持索引从0开始的索引数组赋值)，在PHP7.1版本中添加了对关联数组的支持</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$info = [<span class="string">'a'</span> =&gt; <span class="string">'coffee'</span>, <span class="string">'b'</span> =&gt; <span class="string">'brown'</span>, <span class="string">'c'</span> =&gt; <span class="string">'caffeine'</span>];</span><br><span class="line"><span class="keyword">list</span>(<span class="string">'a'</span> =&gt; $drink, <span class="string">'b'</span> =&gt; $color, <span class="string">'c'</span> =&gt; $power) = $info;</span><br><span class="line">print_r($drink); <span class="comment">// coffee</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="支持为负的字符串偏移量"><a href="#支持为负的字符串偏移量" class="headerlink" title="支持为负的字符串偏移量"></a>支持为负的字符串偏移量</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(<span class="string">"abcdef"</span>[<span class="number">-2</span>]); <span class="comment">// e</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="允许重写抽象方法-Abstract-method"><a href="#允许重写抽象方法-Abstract-method" class="headerlink" title="允许重写抽象方法(Abstract method)"></a>允许重写抽象方法(Abstract method)</h3><blockquote>
+<p>在PHP7.2中抽象方法也可以被子类重写</p>
+</blockquote>
+
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/php-new-features-2/" data-id="ck664iuqw0000n4r58kjs8mvb"
+        class="article-share-link">分享</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/hello-world/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            hexo 快速发布一篇文章
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/php-new-features-1/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PHP新特性(php5.3-php5.6)</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        notify: false,
+        verify: '',
+        app_id: '5dy7OgzheRRkbCxHaYXtYLuv-gzGzoHsz',
+        app_key: 'MyvhEgiC8bmPsNmvFHmsFYND',
+        path: window.location.pathname,
+        avatar: 'mp',
+        placeholder: '欢迎畅所欲言~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2020
+        watson
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+      <aside class="sidebar">
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.jpg" alt="格物致知"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about-me">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+<script>
+  var typed = new Typed("#subtitle", {
+    strings: ['一个Web开发者写给未来的自己的札记','古之立大事者，不惟有超世之才','亦必有坚忍不拔之志。'],
+    startDelay: 0,
+    typeSpeed: 200,
+    loop: true,
+    backSpeed: 100,
+    showCursor: true
+    });
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer:'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+  </div>
+</body>
+
+</html>
