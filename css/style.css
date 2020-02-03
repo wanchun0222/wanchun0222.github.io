@@ -5931,13 +5931,13 @@ button {
   transform: translate(-50%, -100%);
 }
 .cover-inner h1 {
-  font-family: Titillium Web, PingFang SC, Hiragino Sans GB, "Microsoft JhengHei", "Microsoft YaHei", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: adelle,Georgia,"Kaiti SC",KaiTi,serif,Titillium Web, PingFang SC, Hiragino Sans GB, "Microsoft JhengHei", "Microsoft YaHei", Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 7rem;
   margin: 0;
   opacity: 0.95;
 }
 .cover-inner #subtitle-box {
-  font-family: Titillium Web, PingFang SC, Hiragino Sans GB, "Microsoft JhengHei", "Microsoft YaHei", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: adelle,Georgia,"Kaiti SC",KaiTi,serif,Titillium Web, PingFang SC, Hiragino Sans GB, "Microsoft JhengHei", "Microsoft YaHei", Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 0.5rem 0 1.5rem;
 }
